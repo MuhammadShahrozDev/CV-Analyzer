@@ -3,43 +3,60 @@ from __future__ import annotations
 import re
 from functools import lru_cache
 
-import spacy
+
+STOP_WORDS = {
+    "a", "an", "and", "are", "as", "at", "be", "been", "being",
+    "but", "by", "for", "from", "had", "has", "have", "he", "her",
+    "hers", "him", "his", "i", "if", "in", "into", "is", "it",
+    "its", "me", "my", "of", "on", "or", "our", "ours", "she",
+    "so", "that", "the", "their", "theirs", "them", "they", "this",
+    "to", "was", "we", "were", "what", "when", "where", "which",
+    "who", "will", "with", "you", "your", "yours"
+}
 
 
 @lru_cache(maxsize=1)
 def get_nlp():
-    try:
-        nlp = spacy.load("en_core_web_sm")
-    except Exception:
-        nlp = spacy.blank("en")
-    if nlp.max_length < 2_000_000:
-        nlp.max_length = 2_000_000
-    return nlp
+    return None
 
 
 def normalize_whitespace(text: str) -> str:
     return re.sub(r"\s+", " ", text).strip()
 
 
+def normalize_token(token: str) -> str:
+    token = token.strip().lower()
+    token = re.sub(r"[^a-z0-9+#.-]", "", token)
+
+    if not token:
+        return ""
+
+    if token.isdigit():
+        return ""
+
+    if token in STOP_WORDS:
+        return ""
+
+    return token
+
+
 def preprocess_text(text: str) -> str:
     if not text:
         return ""
 
-    nlp = get_nlp()
     lowered = text.lower()
-    doc = nlp(lowered)
+
+    raw_tokens = re.findall(
+        r"[a-z0-9+#.-]+",
+        lowered
+    )
+
     tokens: list[str] = []
 
-    for token in doc:
-        if token.is_space or token.is_punct or token.is_stop:
-            continue
-        if not token.text.strip():
-            continue
-        if token.like_num:
-            continue
-        lemma = token.lemma_.strip().lower() if token.lemma_ and token.lemma_ != "-pron-" else token.text.strip().lower()
-        lemma = re.sub(r"[^a-z0-9+#.-]", "", lemma)
-        if lemma:
-            tokens.append(lemma)
+    for token in raw_tokens:
+        cleaned = normalize_token(token)
+
+        if cleaned:
+            tokens.append(cleaned)
 
     return normalize_whitespace(" ".join(tokens))
