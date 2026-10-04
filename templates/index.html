@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}ATS Resume Analyzer | Upload{% endblock %}
+
+{% block content %}
+<section class="grid-layout">
+  <div class="panel panel-form">
+    <h2>Analyze Resume</h2>
+    <p class="panel-intro">Upload a resume and a job description to generate an ATS compatibility report.</p>
+
+    {% if error_message %}
+    <div class="alert alert-error">{{ error_message }}</div>
+    {% endif %}
+
+    <form action="/analyze" method="post" enctype="multipart/form-data" class="analysis-form">
+      <label class="field">
+        <span>Resume Upload</span>
+        <input type="file" name="resume_file" accept="{{ accepted_resume_types }}" required>
+        <small>Accepted: {{ accepted_resume_types }}</small>
+      </label>
+
+      <label class="field">
+        <span>Job Description Upload</span>
+        <input type="file" name="job_file" accept="{{ accepted_job_types }}">
+        <small>Accepted: {{ accepted_job_types }}</small>
+      </label>
+
+      <label class="field">
+        <span>Job Description URL</span>
+        <input type="url" name="job_url" placeholder="https://example.com/job-description">
+        <small>Use a public job posting link or a direct PDF/DOCX/TXT URL.</small>
+      </label>
+
+      <div class="divider">or paste the job description below</div>
+
+      <label class="field">
+        <span>Manual Job Description</span>
+        <textarea name="job_text" rows="10" placeholder="Paste the job description here. Manual text takes priority over URL and file inputs."></textarea>
+      </label>
+
+      <button type="submit" class="primary-btn">Analyze Resume</button>
+    </form>
+  </div>
+
+  <div class="panel panel-side">
+    <h2>What You Get</h2>
+    <ul class="feature-list">
+      <li>ATS score between 0 and 100</li>
+      <li>Matched and missing skills</li>
+      <li>Matched and missing keywords</li>
+      <li>Similarity score using TF-IDF cosine similarity</li>
+      <li>Targeted improvement recommendations</li>
+    </ul>
+
+    <div class="note-card">
+      <h3>Supported Files</h3>
+      <p>Resume: PDF, DOCX</p>
+      <p>Job description: PDF, DOCX, TXT, or manual text</p>
+    </div>
+
+    <div class="note-card note-card-accent">
+      <h3>Future Ready</h3>
+      <p>The code is modular so you can add sentence transformers, LLM analysis, and multi-job comparison later without changing the upload flow.</p>
+    </div>
+  </div>
+</section>
+{% endblock %}

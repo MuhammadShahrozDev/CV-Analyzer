@@ -1,0 +1,1056 @@
+:root {
+  --bg: #07121f;
+  --bg-alt: #0f1d32;
+  --panel: rgba(10, 20, 36, 0.88);
+  --panel-border: rgba(255, 255, 255, 0.08);
+  --text: #e8eef7;
+  --muted: #9fb0c7;
+  --accent: #7ce0c3;
+  --accent-strong: #4fd1a8;
+  --warning: #f3c969;
+  --danger: #f36b6b;
+  --good: #37d794;
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+  --radius: 22px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(124, 224, 195, 0.14), transparent 32%),
+    radial-gradient(circle at top right, rgba(79, 209, 168, 0.12), transparent 28%),
+    linear-gradient(160deg, #07111d 0%, #0a1527 50%, #08101a 100%);
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", "Trebuchet MS", sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.3), transparent 80%);
+}
+
+.page-shell {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 48px;
+}
+
+.hero-bar {
+  padding: 26px 28px 18px;
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  margin: 0 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.78rem;
+  color: var(--accent);
+}
+
+h1, h2, h3, p {
+  margin-top: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1.04;
+  max-width: 12ch;
+  margin-bottom: 14px;
+}
+
+.hero-copy,
+.panel-intro,
+.muted,
+.note-card p,
+.feature-list,
+small {
+  color: var(--muted);
+}
+
+.grid-layout,
+.results-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: 1.3fr 0.9fr;
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(18px);
+  padding: 26px;
+}
+
+.panel-form,
+.panel-score,
+.panel-details,
+.recommendations-panel {
+  animation: rise 0.7s ease both;
+}
+
+.panel-side {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+}
+
+.analysis-form {
+  display: grid;
+  gap: 16px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.field span,
+.results-header h2,
+.panel h2 {
+  font-size: 1.08rem;
+}
+
+input[type="file"],
+textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  color: var(--text);
+  padding: 14px 16px;
+  outline: none;
+}
+
+textarea {
+  resize: vertical;
+  min-height: 180px;
+}
+
+input[type="file"]::file-selector-button {
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 14px;
+  margin-right: 12px;
+  background: rgba(124, 224, 195, 0.16);
+  color: var(--text);
+}
+
+.primary-btn,
+.secondary-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 18px;
+  text-decoration: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #05141a;
+}
+
+.secondary-btn {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text);
+}
+
+.divider {
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.divider::before,
+.divider::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.divider {
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+}
+
+.alert {
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+}
+
+.alert-error {
+  background: rgba(243, 107, 107, 0.14);
+  border: 1px solid rgba(243, 107, 107, 0.3);
+}
+
+.feature-list {
+  padding-left: 18px;
+  margin-bottom: 0;
+}
+
+.note-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px;
+}
+
+.note-card-accent {
+  background: linear-gradient(135deg, rgba(124, 224, 195, 0.12), rgba(79, 209, 168, 0.06));
+}
+
+.results-grid {
+  align-items: start;
+}
+
+.score-header,
+.results-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.score-pill,
+.file-chip {
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.file-chip {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted);
+}
+
+.score-good {
+  background: rgba(55, 215, 148, 0.16);
+  color: #8ff0c9;
+}
+
+.score-average {
+  background: rgba(243, 201, 105, 0.16);
+  color: #f8dd9b;
+}
+
+.score-poor {
+  background: rgba(243, 107, 107, 0.16);
+  color: #ffacac;
+}
+
+.gauge {
+  --size: 230px;
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  margin: 18px auto 24px;
+  background: conic-gradient(var(--accent) calc(var(--score) * 1%), rgba(255, 255, 255, 0.08) 0);
+  display: grid;
+  place-items: center;
+}
+
+.gauge-inner {
+  width: calc(var(--size) - 42px);
+  height: calc(var(--size) - 42px);
+  border-radius: 50%;
+  background: radial-gradient(circle at top, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.02));
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.gauge-number {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.gauge-label {
+  color: var(--muted);
+}
+
+.progress-block {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.progress-caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progress-track {
+  width: 100%;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: inherit;
+}
+
+.score-breakdown,
+.stats-grid,
+.two-col {
+  display: grid;
+  gap: 14px;
+}
+
+.score-breakdown,
+.stats-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.two-col {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 18px 0;
+}
+
+.metric-card,
+.stat-box,
+.recommendation-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.metric-card span,
+.stat-box span {
+  color: var(--muted);
+  display: block;
+  margin-bottom: 8px;
+}
+
+.tag-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 8px 12px;
+  font-size: 0.92rem;
+}
+
+.tag-good {
+  background: rgba(55, 215, 148, 0.14);
+  color: #9df1cc;
+}
+
+.tag-warn {
+  background: rgba(243, 201, 105, 0.14);
+  color: #f7d685;
+}
+
+.recommendation-list {
+  display: grid;
+  gap: 12px;
+  margin: 18px 0 22px;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 960px) {
+  .grid-layout,
+  .results-grid,
+  .score-breakdown,
+  .stats-grid,
+  .two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .page-shell {
+    width: min(100% - 20px, 1200px);
+  }
+
+  .hero-bar,
+  .panel {
+    padding: 20px;
+  }
+
+  .gauge {
+    --size: 200px;
+  }
+}
+
+@media (max-width: 640px) {
+  h1 {
+    max-width: 100%;
+  }
+
+  .score-header,
+  .results-header,
+  .progress-caption {
+    flex-direction: column;
+  }
+}
+
+
+
+/* ==========================================================================
+   Task 7 - UI polish.
+   Additive only: no existing rule above this line was changed, and nothing
+   here alters layout structure, colour palette or typography scale. It fixes
+   spacing, alignment, card height consistency, chip wrapping, long-text
+   overflow, and adds styles for the panels introduced with the recruiter
+   summary, eligibility screening and responsibility breakdown.
+   ========================================================================== */
+
+/* The progress bar's width arrives as a custom property rather than an inline
+   `width`, so an editor parsing the style attribute as CSS does not try to
+   validate a Jinja expression as a length. Same technique the gauge above
+   already uses; rendering is identical. */
+.progress-fill {
+  width: var(--fill, 0%);
+}
+
+/* --- Spacing between stacked panels. There was no rule for this at all: the
+   results grid supplies its own 20px gap, but consecutive <section> panels
+   below it sat flush against each other. Barely noticeable with two panels,
+   obvious now there are five. Matches the grid gap so the whole page uses one
+   rhythm. --------------------------------------------------------------- */
+main > section + section {
+  margin-top: 20px;
+}
+
+/* The new panels join the same entrance animation as the original ones, so
+   nothing on the page appears out of step. */
+.feedback-panel,
+.eligibility-panel,
+.responsibility-panel {
+  animation: rise 0.7s ease both;
+}
+
+/* --- Long text. Requirement lines, evidence quotes and URLs can be long and
+   unbroken; without this they widen their grid column and push the layout
+   sideways instead of wrapping. ------------------------------------------ */
+.panel p,
+.panel li,
+.tag,
+.recommendation-card,
+.eligibility-detail,
+.responsibility-req,
+.responsibility-evidence,
+.feedback-block p {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+/* --- Section headings inside panels. These were relying on browser defaults,
+   so spacing above and below a heading was inconsistent between rows. ----- */
+.panel h3 {
+  margin: 0 0 10px;
+  font-size: 0.98rem;
+  letter-spacing: 0.01em;
+}
+
+.two-col > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;            /* lets flex children shrink instead of overflowing */
+}
+
+/* Cards in a row end at the same height rather than stepping. */
+.stats-grid,
+.score-breakdown {
+  align-items: stretch;
+}
+
+.metric-card,
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* --- Chips. Long skill names ("Microsoft Certified Data Analyst") were
+   overflowing their pill; they now wrap inside it. ------------------------ */
+.tag {
+  max-width: 100%;
+  line-height: 1.35;
+  text-align: left;
+}
+
+.tag-wrap {
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+
+.tag-neutral {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--muted);
+}
+
+.tag-optional {
+  background: rgba(120, 160, 255, 0.14);
+  color: #b9ccff;
+}
+
+.skills-note,
+.eligibility-note,
+.responsibility-note {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  margin: 8px 0 0;
+}
+
+.eligibility-note,
+.responsibility-note {
+  margin: 6px 0 18px;
+}
+
+/* --- Recruiter feedback. The briefing used to sit in half a column and run
+   past the fold; it now has a full-width panel laid out in readable blocks
+   with a capped measure so lines stay comfortable to read. ---------------- */
+.feedback-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-top: 6px;
+}
+
+.feedback-block {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.feedback-block h3 {
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.feedback-block p {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.65;
+  max-width: 62ch;
+  color: var(--text);
+}
+
+/* --- Eligibility screening. -------------------------------------------- */
+.eligibility-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+  align-items: stretch;
+}
+
+.eligibility-row {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.eligibility-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.eligibility-issue {
+  margin: 0 0 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--warning);
+}
+
+.eligibility-detail {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  margin: 0 0 12px;
+}
+
+.eligibility-values {
+  display: grid;
+  gap: 4px;
+  font-size: 0.84rem;
+  color: var(--muted);
+  margin-top: auto;          /* pins the values to the bottom of every card */
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.eligibility-values em {
+  font-style: normal;
+  opacity: 0.75;
+  margin-right: 6px;
+}
+
+/* --- Responsibility breakdown. ----------------------------------------- */
+.responsibility-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 20px;
+  align-items: start;
+}
+
+.responsibility-group {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 16px;
+}
+
+.responsibility-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.responsibility-item {
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.responsibility-item:first-of-type {
+  border-top: none;
+  padding-top: 0;
+}
+
+.responsibility-req {
+  margin: 0 0 6px;
+  font-size: 0.92rem;
+  line-height: 1.5;
+}
+
+.responsibility-evidence {
+  margin: 0 0 6px;
+  font-size: 0.87rem;
+  line-height: 1.5;
+  color: var(--muted);
+  border-left: 2px solid rgba(124, 224, 195, 0.35);
+  padding-left: 10px;
+}
+
+.responsibility-source,
+.responsibility-empty {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+  opacity: 0.8;
+}
+
+/* --- Narrow screens. The new grids already collapse via auto-fit; these
+   rules keep the header rows and pills from crowding on small phones. ---- */
+@media (max-width: 640px) {
+  .feedback-grid,
+  .eligibility-grid,
+  .responsibility-groups {
+    grid-template-columns: 1fr;
+  }
+
+  .eligibility-head,
+  .responsibility-head {
+    align-items: flex-start;
+  }
+
+  .feedback-block p {
+    max-width: none;
+  }
+}
+
+
+
+/* ==========================================================================
+   Round 3 - hero, dashboard spacing and SaaS polish (Tasks 1, 2, 10).
+
+   Appended, not edited: every rule above this line is untouched. Where a rule
+   here shares a selector with an earlier one it wins on source order, which is
+   how the full-width hero overrides the old .hero-bar padding without that
+   rule being removed (base.html still carries hero-bar as a fallback).
+   ========================================================================== */
+
+/* --- Task 1: full-width hero ------------------------------------------- */
+.hero {
+  width: 100%;
+  padding: 56px 24px 46px;
+  margin: 0 0 4px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  border-bottom: 1px solid var(--panel-border);
+  background:
+    radial-gradient(ellipse at 50% -20%, rgba(124, 224, 195, 0.16), transparent 62%),
+    linear-gradient(180deg, rgba(15, 29, 50, 0.72), rgba(7, 17, 29, 0.35));
+  backdrop-filter: blur(14px);
+  animation: rise 0.7s ease both;
+}
+
+/* Same 1200px cap as .page-shell, so the hero text lines up with the
+   dashboard below instead of drifting apart on a wide monitor. */
+.hero-inner {
+  width: min(1200px, calc(100% - 32px));
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 4.6vw, 3.05rem);
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+
+.hero-subtitle {
+  color: var(--accent);
+  font-size: clamp(1rem, 1.7vw, 1.22rem);
+  font-weight: 600;
+  letter-spacing: 0.015em;
+  margin: 0 0 18px;
+}
+
+.hero .hero-copy {
+  max-width: 74ch;
+  margin: 0 auto 26px;
+  font-size: 0.99rem;
+  line-height: 1.72;
+}
+
+.hero-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.hero-chips li {
+  border: 1px solid rgba(124, 224, 195, 0.26);
+  background: rgba(124, 224, 195, 0.08);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 7px 15px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* --- Task 2: breathing room between cards ------------------------------ */
+.results-grid {
+  gap: 22px;
+}
+
+.two-col {
+  gap: 18px;
+  margin: 22px 0;
+}
+
+.score-breakdown,
+.stats-grid {
+  gap: 16px;
+}
+
+/* Equal-height boxes so a one-word label and a three-word one still line up. */
+.stat-box,
+.metric-card {
+  min-height: 92px;
+}
+
+/* --- Task 5 support: education verdict inside its stat box ------------- */
+.stat-box .verdict-match {
+  color: #8ff0c9;
+}
+
+.stat-box .verdict-borderline,
+.stat-box .verdict-unknown {
+  color: #f8dd9b;
+}
+
+.stat-box .verdict-fail {
+  color: #ffacac;
+}
+
+/* --- Task 4 support: soft-skill chips read differently from hard gaps --- */
+.tag-soft {
+  background: rgba(168, 148, 255, 0.14);
+  color: #cbbcff;
+}
+
+/* --- Task 7 support: the recruiter decision ---------------------------- */
+.decision-pill {
+  font-size: 0.95rem;
+  padding: 10px 18px;
+  letter-spacing: 0.01em;
+}
+
+.decision-card {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 18px;
+  padding: 18px;
+  margin: 4px 0 16px;
+}
+
+.decision-rationale {
+  margin: 0 0 12px;
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.decision-reasons {
+  margin: 0 0 12px;
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.decision-basis {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted);
+  opacity: 0.85;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* --- Task 8 support: priority groups ----------------------------------- */
+.priority-group {
+  margin-bottom: 18px;
+}
+
+.priority-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.priority-group .recommendation-list {
+  margin: 0;
+}
+
+/* --- Task 9 support: confidence badge ---------------------------------- */
+.confidence {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 999px;
+  padding: 2px 9px;
+  margin-right: 8px;
+  font-weight: 700;
+  color: var(--text);
+  font-size: 0.76rem;
+  white-space: nowrap;
+}
+
+/* --- Task 10: typography and hierarchy --------------------------------- */
+.panel h2 {
+  letter-spacing: -0.01em;
+}
+
+.results-header {
+  margin-bottom: 16px;
+}
+
+.tag {
+  font-size: 0.88rem;
+  padding: 7px 13px;
+}
+
+.recommendation-card {
+  line-height: 1.6;
+}
+
+/* --- Responsiveness ----------------------------------------------------- */
+@media (max-width: 960px) {
+  .hero {
+    padding: 44px 20px 36px;
+  }
+
+  .stat-box,
+  .metric-card {
+    min-height: 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 34px 16px 28px;
+  }
+
+  .hero-chips {
+    gap: 8px;
+  }
+
+  .hero-chips li {
+    font-size: 0.79rem;
+    padding: 6px 12px;
+  }
+
+  .hero .hero-copy {
+    font-size: 0.94rem;
+  }
+
+  .decision-pill {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+
+/* ==========================================================================
+   Batch automation page. Additive only - nothing above this line changes.
+   ========================================================================== */
+.is-hidden { display: none !important; }
+
+.batch-note { font-size: 0.9rem; line-height: 1.6; margin: 4px 0 18px; }
+.batch-hint { font-size: 0.82rem; margin: 6px 0 0; }
+
+.batch-step {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 20px;
+  margin-top: 20px;
+}
+.batch-step:first-of-type { border-top: none; padding-top: 0; margin-top: 0; }
+
+.step-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px; height: 22px;
+  margin-right: 8px;
+  border-radius: 50%;
+  background: rgba(124, 224, 195, 0.14);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.batch-status { font-size: 0.88rem; margin: 12px 0 0; min-height: 1.2em; }
+.batch-status[data-kind="error"] { color: #ffacac; }
+.batch-status[data-kind="ok"] { color: var(--accent); }
+
+.batch-progress { margin-top: 16px; }
+
+.batch-tally { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.tally-pill { border-radius: 999px; padding: 5px 12px; font-size: 0.8rem; font-weight: 700; }
+
+/* The table can be wide; it scrolls rather than stretching the panel. */
+.batch-table-wrap {
+  overflow-x: auto;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+.batch-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+.batch-table th, .batch-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  vertical-align: top;
+}
+.batch-table th {
+  color: var(--muted);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  white-space: nowrap;
+}
+.batch-table tbody tr:last-child td { border-bottom: none; }
+.batch-table code { font-size: 0.82rem; color: var(--accent); }
+
+.link-btn {
+  background: none; border: none; color: var(--accent);
+  cursor: pointer; font: inherit; padding: 0; text-decoration: underline;
+}
+
+.batch-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 4px; }
+
+/* Draft viewer */
+.email-modal {
+  position: fixed; inset: 0; z-index: 50;
+  display: flex; align-items: center; justify-content: center;
+  padding: 24px;
+  background: rgba(4, 10, 18, 0.72);
+  backdrop-filter: blur(6px);
+}
+.email-modal-inner {
+  width: min(780px, 100%); max-height: 86vh; overflow-y: auto;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: 22px;
+  padding: 24px;
+}
+.email-modal-inner label {
+  display: block; margin: 14px 0 6px;
+  font-size: 0.8rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+}
+.email-modal-inner input,
+.email-modal-inner textarea {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 12px;
+  color: var(--text);
+  font: inherit;
+  line-height: 1.6;
+}
+.email-modal-inner textarea { resize: vertical; }
+
+@media (max-width: 640px) {
+  .batch-actions { flex-direction: column; }
+  .batch-actions button { width: 100%; }
+}

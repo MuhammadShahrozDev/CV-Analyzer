@@ -1,0 +1,500 @@
+{% extends 'base.html' %}
+
+{% block title %}ATS Resume Analyzer | Results{% endblock %}
+
+{% block content %}
+<section class="results-grid">
+  <div class="panel panel-score">
+    <div class="score-header">
+      <div>
+        <p class="eyebrow">ATS Score</p>
+        <h2>{{ report.ats_score }} / 100</h2>
+      </div>
+      <div class="score-pill score-{{ report.score_label }}">{{ report.score_label|capitalize }}</div>
+    </div>
+
+    <div class="gauge" style="--score: {{ report.ats_score }};">
+      <div class="gauge-inner">
+        <span class="gauge-number">{{ report.ats_score }}</span>
+        <span class="gauge-label">ATS</span>
+      </div>
+    </div>
+
+    <div class="progress-block">
+      <div class="progress-caption">
+        <span>Compatibility</span>
+        <strong>{{ report.ats_score }}%</strong>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill score-{{ report.score_label }}" style="--fill: {{ report.ats_score }}%;"></div>
+      </div>
+    </div>
+
+    <div class="score-breakdown">
+      <div class="metric-card">
+        <span>Keyword Match</span>
+        <strong>{{ report.keyword_score }}%</strong>
+      </div>
+      <div class="metric-card">
+        <span>Skill Match</span>
+        <strong>{{ report.skill_score }}%</strong>
+      </div>
+      <div class="metric-card">
+        <span>Similarity</span>
+        <strong>{{ report.similarity_score }}%</strong>
+      </div>
+    </div>
+
+    <div class="stats-grid" style="margin-top: 18px;">
+      <div class="stat-box">
+        <span>Technical Skills</span>
+        <strong>{{ report.technical_skills_score }}%</strong>
+      </div>
+      <div class="stat-box">
+        <span>Experience</span>
+        <strong>{{ report.experience_score }}%</strong>
+      </div>
+      <div class="stat-box">
+        <span>Projects</span>
+        <strong>{{ report.projects_score }}%</strong>
+      </div>
+      <div class="stat-box">
+        <span>Summary</span>
+        <strong>{{ report.summary_score }}%</strong>
+      </div>
+      <div class="stat-box">
+        <span>Education</span>
+        {% if report.education_verdict %}
+        <strong class="verdict-{{ report.education_verdict.status }}">{{ report.education_verdict.icon }} {{ report.education_verdict.label }}</strong>
+        {% else %}
+        <strong>&ndash;</strong>
+        {% endif %}
+      </div>
+      <div class="stat-box">
+        <span>Soft Skills</span>
+        <strong>{{ report.soft_skills_score }}%</strong>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel panel-details">
+    <div class="results-header">
+      <div>
+        <p class="eyebrow">Analysis Summary</p>
+        <h2>Matched and Missing Signals</h2>
+      </div>
+      <div class="file-chip">Resume: {{ resume_name }}</div>
+      <div class="file-chip">Job: {{ job_name }}</div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Matched Skills</h3>
+        <div class="tag-wrap">
+          {% for item in report.matched_skills %}
+          <span class="tag tag-good">{{ item }}</span>
+          {% else %}
+          <span class="muted">No skills matched.</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <h3>Missing Required Technical Skills</h3>
+        <div class="tag-wrap">
+          {% for item in report.missing_required_technical_skills %}
+          <span class="tag tag-warn">{{ item }}</span>
+          {% else %}
+          <span class="muted">Every technical skill the job description requires is evidenced.</span>
+          {% endfor %}
+        </div>
+        <p class="muted skills-note">Hard requirements. These carry the weight in the ATS score.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Partially Matched Skills</h3>
+        <div class="tag-wrap">
+          {% for item in report.partial_skills %}
+          <span class="tag tag-warn">{{ item }}</span>
+          {% else %}
+          <span class="muted">No partial skill matches detected.</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <h3>Missing Required Soft Skills</h3>
+        <div class="tag-wrap">
+          {% for item in report.missing_required_soft_skills %}
+          <span class="tag tag-soft">{{ item }}</span>
+          {% else %}
+          <span class="muted">No required soft skills are missing.</span>
+          {% endfor %}
+        </div>
+        <p class="muted skills-note">Stated requirements, but behavioural. These affect the score only slightly.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Required Technical Skills</h3>
+        <div class="tag-wrap">
+          {% for item in report.required_technical_skills %}
+          <span class="tag tag-neutral">{{ item }}</span>
+          {% else %}
+          <span class="muted">No technical requirements could be read from the job description.</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <h3>Required Soft Skills</h3>
+        <div class="tag-wrap">
+          {% for item in report.required_soft_skills %}
+          <span class="tag tag-soft">{{ item }}</span>
+          {% else %}
+          <span class="muted">No soft-skill requirements stated.</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Preferred Skills (Not Required)</h3>
+        <div class="tag-wrap">
+          {% for item in report.missing_preferred_skills %}
+          <span class="tag tag-optional">{{ item }}</span>
+          {% else %}
+          <span class="muted">No preferred-only skills are missing.</span>
+          {% endfor %}
+        </div>
+        <p class="muted skills-note">Listed under &ldquo;preferred&rdquo; or &ldquo;nice to have&rdquo; in the posting, so these barely affect the ATS score.</p>
+      </div>
+      <div>
+        <h3>Also Mentioned in the Posting</h3>
+        <div class="tag-wrap">
+          {% for item in report.context_skills %}
+          <span class="tag tag-neutral">{{ item }}</span>
+          {% else %}
+          <span class="muted">Nothing mentioned outside the requirements.</span>
+          {% endfor %}
+        </div>
+        <p class="muted skills-note">Named in a company description, tech stack or aside &mdash; not a stated requirement.</p>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3>Matched Keywords</h3>
+        <div class="tag-wrap">
+          {% for item in report.matched_keywords %}
+          <span class="tag tag-good">{{ item }}</span>
+          {% else %}
+          <span class="muted">No matched keywords.</span>
+          {% endfor %}
+        </div>
+      </div>
+      <div>
+        <h3>Missing Keywords</h3>
+        <div class="tag-wrap">
+          {% for item in report.missing_keywords %}
+          <span class="tag tag-warn">{{ item }}</span>
+          {% else %}
+          <span class="muted">No missing keywords detected.</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <span>Skills Found</span>
+        <strong>{{ report.skills_found }}</strong>
+      </div>
+      <div class="stat-box">
+        <span>Skills Missing</span>
+        <strong>{{ report.skills_missing }}</strong>
+      </div>
+      <div class="stat-box">
+        <span>Skills Partial</span>
+        <strong>{{ report.skills_partial }}</strong>
+      </div>
+      <div class="stat-box">
+        <span>Similarity</span>
+        <strong>{{ report.similarity_score }}%</strong>
+      </div>
+      <div class="stat-box">
+        <span>ATS Grade</span>
+        <strong>{{ report.score_label|capitalize }}</strong>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="panel feedback-panel">
+  <div class="results-header">
+    <div>
+      <p class="eyebrow">Recruiter Feedback</p>
+      <h2>Screening Summary</h2>
+    </div>
+  </div>
+
+  {% if report.recruiter_summary %}
+  <div class="feedback-grid">
+    {% for item in report.recruiter_summary %}
+    <div class="feedback-block">
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.text }}</p>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="recommendation-card">{{ report.recruiter_feedback }}</div>
+  {% endif %}
+</section>
+
+<section class="panel eligibility-panel">
+  <div class="results-header">
+    <div>
+      <p class="eyebrow">Eligibility Screening</p>
+      <h2>Recruiter Decision</h2>
+    </div>
+    {% if report.recruiter_decision %}
+    <div class="score-pill decision-pill {{ report.recruiter_decision.pill }}">{{ report.recruiter_decision.decision }}</div>
+    {% else %}
+    <div class="score-pill {{ report.eligibility.overall_pill or 'score-average' }}">
+      {{ report.eligibility.overall_icon }} {{ report.eligibility.overall_label or 'Not assessed' }}
+    </div>
+    {% endif %}
+  </div>
+
+  {% if report.recruiter_decision %}
+  <div class="decision-card">
+    <p class="decision-rationale">{{ report.recruiter_decision.rationale }}</p>
+    <ul class="decision-reasons">
+      {% for reason in report.recruiter_decision.reasons %}
+      <li>{{ reason }}</li>
+      {% endfor %}
+    </ul>
+    <p class="decision-basis">Based on education, experience, location, work mode and required technical skills &mdash; not on the ATS score. Technical coverage: {{ report.recruiter_decision.technical_coverage }}%.</p>
+  </div>
+  {% endif %}
+
+  <p class="muted eligibility-note">Screened before scoring and deliberately kept out of the ATS score. Location, work mode, experience and education are hiring filters, not measures of resume quality.</p>
+
+  <div class="eligibility-grid">
+    {% for check in report.eligibility.checks %}
+    <div class="eligibility-row">
+      <div class="eligibility-head">
+        <strong>{{ check.title }}</strong>
+        <span class="score-pill {{ check.pill }}">{{ check.icon }} {{ check.label }}</span>
+      </div>
+      {% if check.issue %}
+      <p class="eligibility-issue">{{ check.issue }}</p>
+      {% endif %}
+      <p class="eligibility-detail">{{ check.detail }}</p>
+      {#
+        check.get('values') rather than check.values: on a dict, Jinja resolves
+        the attribute first, so `check.values` returns the built-in dict method
+        instead of the key of the same name.
+      #}
+      {% set rows = check.get('values') or [] %}
+      <div class="eligibility-values">
+        {% for row in rows %}
+        <span><em>{{ row.label }}</em> {{ row.value }}</span>
+        {% else %}
+        <span><em>Resume</em> {{ check.candidate_value }}</span>
+        <span><em>Job</em> {{ check.job_value }}</span>
+        {% endfor %}
+      </div>
+    </div>
+    {% else %}
+    <div class="recommendation-card muted">Eligibility could not be assessed from these documents.</div>
+    {% endfor %}
+  </div>
+
+  {% if report.eligibility.summary %}
+  <div class="recommendation-card">{{ report.eligibility.summary }}</div>
+  {% endif %}
+</section>
+
+<section class="panel recommendations-panel">
+  <div class="results-header">
+    <div>
+      <p class="eyebrow">Recommendations</p>
+      <h2>Targeted Suggestions</h2>
+    </div>
+  </div>
+  {% if report.recommendation_groups %}
+  {% for group in report.recommendation_groups %}
+  {# group['items'], not group.items - see the note on check.get above. #}
+  <div class="priority-group">
+    <h3 class="priority-heading">{{ group.icon }} {{ group.priority }}</h3>
+    <div class="recommendation-list">
+      {% for item in group['items'] %}
+      <div class="recommendation-card">{{ item }}</div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endfor %}
+  {% else %}
+  <div class="recommendation-list">
+    {% for item in report.recommendations %}
+    <div class="recommendation-card">{{ item }}</div>
+    {% else %}
+    <div class="recommendation-card">No improvements identified.</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+</section>
+
+{% if email_contexts_json %}
+<style>
+  .email-panel .email-mode-selector {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    margin: 6px 0 4px;
+    flex-wrap: wrap;
+  }
+  .email-panel .email-mode-selector label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .email-panel .email-field { margin-top: 14px; }
+  .email-panel .email-field label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: inherit;
+    opacity: 0.8;
+  }
+  .email-panel input[type="text"],
+  .email-panel textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(120, 120, 120, 0.35);
+    background: rgba(127, 127, 127, 0.06);
+    color: inherit;
+    font-family: inherit;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    resize: vertical;
+  }
+  .email-panel .email-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .email-panel .email-actions .secondary-btn {
+    cursor: pointer;
+    border: 1px solid rgba(120, 120, 120, 0.35);
+    background: transparent;
+    font: inherit;
+  }
+</style>
+<section class="panel email-panel">
+  <div class="results-header">
+    <div>
+      <p class="eyebrow">Application Email</p>
+      <h2>Ready-to-Send Draft</h2>
+    </div>
+  </div>
+
+  <p class="muted">Generated from this analysis. Review before sending &mdash; edit anything below, then copy.</p>
+
+  <div class="email-field">
+    <label>Email Type</label>
+    <div class="email-mode-selector">
+      <label>
+        <input type="radio" name="email-type" value="individual" id="email-type-individual" {% if email_mode == 'individual' %}checked{% endif %} />
+        Individual Application
+      </label>
+      <label>
+        <input type="radio" name="email-type" value="team" id="email-type-team" {% if email_mode == 'team' %}checked{% endif %} />
+        Team / B2B Collaboration
+      </label>
+    </div>
+  </div>
+
+  {% if not email %}
+  <div class="recommendation-card muted">We couldn't generate a draft automatically. Click Regenerate to try again.</div>
+  {% endif %}
+
+  <div class="email-field">
+    <label for="email-subject">Subject</label>
+    <input type="text" id="email-subject" value="{{ email.subject if email else '' }}" />
+  </div>
+
+  <div class="email-field">
+    <label for="email-body">Email</label>
+    <textarea id="email-body" rows="12">{{ email.body if email else '' }}</textarea>
+  </div>
+
+  <input type="hidden" id="email-context" value="{{ email_contexts_json }}" />
+
+  <div class="email-actions">
+    <button type="button" id="copy-email-btn" class="secondary-btn">Copy Email</button>
+    <button type="button" id="regenerate-email-btn" class="secondary-btn">Regenerate</button>
+    <span id="email-status" class="muted"></span>
+  </div>
+</section>
+{% endif %}
+
+{% set groups = report.responsibility_breakdown or {} %}
+{% set level_pills = {'Strong Match': 'score-good', 'Moderate Match': 'score-average', 'Weak Match': 'score-average', 'Missing': 'score-poor'} %}
+<section class="panel responsibility-panel">
+  <div class="results-header">
+    <div>
+      <p class="eyebrow">Responsibility Matching</p>
+      <h2>Requirement by Requirement</h2>
+    </div>
+  </div>
+
+  <p class="muted responsibility-note">Every responsibility the posting states, graded against the resume, with the evidence behind each verdict.</p>
+
+  <div class="responsibility-groups">
+    {% for level in ['Strong Match', 'Moderate Match', 'Weak Match', 'Missing'] %}
+    {% set items = groups.get(level, []) %}
+    <div class="responsibility-group">
+      <div class="responsibility-head">
+        <strong>{{ level }}</strong>
+        <span class="score-pill {{ level_pills[level] }}">{{ items|length }}</span>
+      </div>
+      {% for item in items %}
+      <div class="responsibility-item">
+        <p class="responsibility-req">{{ item.source }}</p>
+        {% if item.target %}
+        <p class="responsibility-evidence">&ldquo;{{ item.target }}&rdquo;</p>
+        {% endif %}
+        <p class="responsibility-source">
+          {# Confidence is shown for matched responsibilities only. On a
+             Missing item it would always read 0%, which is noise. #}
+          {% if item.level and item.level != 'Missing' %}
+          <span class="confidence">Confidence: {{ item.score|round|int }}%</span>
+          {% endif %}
+          {{ item.evidence_source }}
+        </p>
+      </div>
+      {% else %}
+      <p class="muted responsibility-empty">None in this group.</p>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="recommendation-card muted">The posting states no checkable responsibilities.</div>
+    {% endfor %}
+  </div>
+
+  <a class="secondary-btn" href="/">Analyze another resume</a>
+</section>
+{% endblock %}

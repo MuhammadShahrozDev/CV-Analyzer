@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Batch Email Automation - ATS Resume Analyzer{% endblock %}
+
+{% block content %}
+<section class="panel">
+  <div class="results-header">
+    <div>
+      <p class="eyebrow">Batch Automation</p>
+      <h2>One CV, many jobs</h2>
+    </div>
+    <a class="secondary-btn" href="/">Single analysis</a>
+  </div>
+
+  <p class="muted batch-note">
+    Upload a CV and a spreadsheet of jobs. The CV is read once; each job is
+    analysed and given its own tailored email. Nothing is sent until you review
+    the drafts and confirm.
+  </p>
+
+  <!-- Step 1 -->
+  <div class="batch-step" id="step-upload">
+    <h3><span class="step-number">1</span> Upload</h3>
+    <div class="two-col">
+      <div class="field">
+        <label for="cv-file">Candidate CV <span class="muted">({{ accepted_resume_types }})</span></label>
+        <input type="file" id="cv-file" accept=".pdf,.docx">
+      </div>
+      <div class="field">
+        <label for="workbook-file">Job spreadsheet <span class="muted">({{ accepted_workbook_types }})</span></label>
+        <input type="file" id="workbook-file" accept=".xlsx,.xlsm">
+      </div>
+    </div>
+    <button class="primary-btn" id="inspect-btn" type="button">Read files</button>
+    <p class="batch-status" id="inspect-status"></p>
+  </div>
+
+  <!-- Step 2 -->
+  <div class="batch-step is-hidden" id="step-mapping">
+    <h3><span class="step-number">2</span> Columns</h3>
+    <p class="muted batch-note" id="mapping-summary"></p>
+    <div id="mapping-table"></div>
+    <div id="mapping-picker" class="is-hidden">
+      <p class="muted batch-note">Choose the correct column for each required field.</p>
+      <div id="mapping-selects"></div>
+      <button class="primary-btn" id="confirm-mapping-btn" type="button">Use these columns</button>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="batch-step is-hidden" id="step-options">
+    <h3><span class="step-number">3</span> Options</h3>
+    <div class="two-col">
+      <div class="field">
+        <label>Email type</label>
+        <div class="email-mode-options">
+          <label class="email-mode-option">
+            <input type="radio" name="batch-mode" value="individual" checked>
+            <span>Individual Application</span>
+          </label>
+          <label class="email-mode-option">
+            <input type="radio" name="batch-mode" value="team">
+            <span>Team / B2B Collaboration</span>
+          </label>
+        </div>
+      </div>
+      <div class="field">
+        <label for="job-count">Number of jobs to process</label>
+        <input type="number" id="job-count" min="1" value="5">
+        <p class="muted batch-hint" id="row-hint"></p>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Recipient</label>
+      <div class="email-mode-options" id="recipient-mode-options">
+        <label class="email-mode-option">
+          <input type="radio" name="recipient-mode" value="demo" checked>
+          <span>Send all to one address (demo)</span>
+        </label>
+        <label class="email-mode-option is-hidden" id="row-email-option">
+          <input type="radio" name="recipient-mode" value="row">
+          <span>Use each row's own email</span>
+        </label>
+      </div>
+      <input type="email" id="demo-recipient" placeholder="Recipient email address" autocomplete="off">
+      <p class="muted batch-hint">
+        No address is stored in the application. Whatever you enter here is used
+        for this run only.
+      </p>
+    </div>
+
+    <button class="primary-btn" id="generate-btn" type="button">Generate emails</button>
+    <p class="batch-status" id="generate-status"></p>
+
+    <div class="batch-progress is-hidden" id="progress-wrap">
+      <div class="progress-track"><div class="progress-fill score-good" id="progress-fill"></div></div>
+      <p class="muted batch-hint" id="progress-text"></p>
+    </div>
+  </div>
+
+  <!-- Step 4 -->
+  <div class="batch-step is-hidden" id="step-results">
+    <h3><span class="step-number">4</span> Review</h3>
+    <div class="batch-tally" id="batch-tally"></div>
+    <div class="batch-table-wrap">
+      <table class="batch-table">
+        <thead>
+          <tr>
+            <th>Row</th><th>Role</th><th>Company</th><th>Recipient</th><th>Status</th><th>Email</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Step 5 -->
+  <div class="batch-step is-hidden" id="step-send">
+    <h3><span class="step-number">5</span> Send</h3>
+    <div class="decision-card" id="send-summary"></div>
+    <div class="batch-actions">
+      <button class="secondary-btn" id="dry-run-btn" type="button">Dry run (send nothing)</button>
+      <button class="primary-btn" id="send-btn" type="button">Send emails</button>
+    </div>
+    <p class="batch-status" id="send-status"></p>
+    <div class="batch-table-wrap is-hidden" id="send-results-wrap">
+      <table class="batch-table">
+        <thead><tr><th>Row</th><th>Recipient</th><th>Subject</th><th>Status</th><th>Detail</th></tr></thead>
+        <tbody id="send-results-body"></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- Draft viewer -->
+<div class="email-modal is-hidden" id="email-modal">
+  <div class="email-modal-inner">
+    <div class="results-header">
+      <div>
+        <p class="eyebrow">Generated draft</p>
+        <h2 id="modal-role">Email</h2>
+      </div>
+      <button class="secondary-btn" id="modal-close" type="button">Close</button>
+    </div>
+    <label for="modal-subject">Subject</label>
+    <input type="text" id="modal-subject" readonly>
+    <label for="modal-body">Email</label>
+    <textarea id="modal-body" rows="16" readonly></textarea>
+  </div>
+</div>
+
+<!--
+  Server values are passed as data attributes rather than as Jinja inside a
+  <script> block. An editor parses script contents as JavaScript, so
+  "{{ chunk_size }}" there is reported as a syntax error even though Jinja
+  replaces it before the browser sees it. Attributes carry the same values
+  with no false warnings.
+-->
+<div id="batch-config"
+     data-chunk-size="{{ chunk_size }}"
+     data-smtp-ready="{{ 'true' if smtp_ready else 'false' }}"
+     hidden></div>
+<script src="{{ url_for('static', path='js/batch.js') }}"></script>
+{% endblock %}

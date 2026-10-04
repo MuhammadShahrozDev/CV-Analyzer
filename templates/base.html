@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}ATS Resume Analyzer{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+  <!--
+    Full-width hero.
+
+    This sits outside .page-shell on purpose. The shell caps content at 1200px,
+    so while the hero lived inside it the title was pinned to the left edge of
+    that column and the whole right-hand side of the screen read as empty. As a
+    sibling of the shell the banner spans the viewport, and .hero-inner applies
+    the same 1200px cap to the text so it stays aligned with the dashboard
+    below it.
+
+    hero-bar is kept alongside hero so the header still has sensible padding if
+    this file is updated before the stylesheet.
+  -->
+  <header class="hero hero-bar">
+    <div class="hero-inner">
+      <h1 class="hero-title">ATS Resume Analyzer</h1>
+      <p class="hero-subtitle">Intelligent Resume Compatibility Scoring</p>
+      <p class="hero-copy">
+        Compare resumes against job descriptions using ATS scoring, semantic matching,
+        eligibility screening, recruiter-style feedback, responsibility matching,
+        and targeted recommendations.
+      </p>
+
+      <ul class="hero-chips">
+        <li>ATS Scoring</li>
+        <li>Eligibility</li>
+        <li>Skills</li>
+        <li>Responsibilities</li>
+        <li>Recruiter Feedback</li>
+        <li>Recommendations</li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="page-shell">
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+  </div>
+  <script src="{{ url_for('static', path='js/main.js') }}"></script>
+</body>
+</html>

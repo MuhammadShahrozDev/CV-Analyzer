@@ -1,0 +1,1493 @@
+{
+  "categories": {
+    "Programming Languages": [
+      {
+        "name": "Python",
+        "aliases": [
+          "Python",
+          "Python3",
+          "Python 3"
+        ],
+        "implies": [
+          "Scripting",
+          "Data Analysis",
+          "Automation"
+        ],
+        "weight": 1.3
+      },
+      {
+        "name": "R",
+        "aliases": [
+          "R programming",
+          "R language",
+          "R statistical"
+        ],
+        "implies": [
+          "Statistical Analysis",
+          "Data Analysis"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "SQL",
+        "aliases": [
+          "SQL",
+          "Structured Query Language",
+          "ANSI SQL"
+        ],
+        "implies": [
+          "Database Management",
+          "Query Optimization",
+          "Data Analysis"
+        ],
+        "weight": 1.3
+      },
+      {
+        "name": "Java",
+        "aliases": [
+          "Java",
+          "Core Java",
+          "Java SE"
+        ],
+        "implies": [
+          "Object Oriented Programming"
+        ]
+      },
+      {
+        "name": "C++",
+        "aliases": [
+          "C++",
+          "CPP",
+          "C plus plus"
+        ],
+        "implies": [
+          "Object Oriented Programming"
+        ]
+      },
+      {
+        "name": "C#",
+        "aliases": [
+          "C#",
+          "C sharp",
+          "CSharp"
+        ],
+        "implies": [
+          "Object Oriented Programming"
+        ]
+      },
+      {
+        "name": "JavaScript",
+        "aliases": [
+          "JavaScript",
+          "JS",
+          "ECMAScript"
+        ],
+        "implies": [
+          "Web Development"
+        ]
+      },
+      {
+        "name": "TypeScript",
+        "aliases": [
+          "TypeScript",
+          "TS"
+        ],
+        "implies": [
+          "Web Development"
+        ]
+      },
+      {
+        "name": "Scala",
+        "aliases": [
+          "Scala"
+        ],
+        "implies": [
+          "Big Data"
+        ]
+      },
+      {
+        "name": "Go",
+        "aliases": [
+          "Golang",
+          "Go programming"
+        ]
+      },
+      {
+        "name": "MATLAB",
+        "aliases": [
+          "MATLAB"
+        ],
+        "implies": [
+          "Statistical Analysis"
+        ]
+      },
+      {
+        "name": "SAS",
+        "aliases": [
+          "SAS programming",
+          "SAS analytics"
+        ],
+        "implies": [
+          "Statistical Analysis"
+        ]
+      },
+      {
+        "name": "VBA",
+        "aliases": [
+          "VBA",
+          "Visual Basic for Applications",
+          "Excel macros"
+        ],
+        "implies": [
+          "Automation",
+          "Reporting"
+        ]
+      },
+      {
+        "name": "Bash",
+        "aliases": [
+          "Bash",
+          "Shell scripting",
+          "Shell script"
+        ],
+        "implies": [
+          "Automation"
+        ]
+      }
+    ],
+    "Databases": [
+      {
+        "name": "MySQL",
+        "aliases": [
+          "MySQL"
+        ],
+        "implies": [
+          "Database Management",
+          "SQL"
+        ]
+      },
+      {
+        "name": "PostgreSQL",
+        "aliases": [
+          "PostgreSQL",
+          "Postgres"
+        ],
+        "implies": [
+          "Database Management",
+          "SQL"
+        ]
+      },
+      {
+        "name": "MongoDB",
+        "aliases": [
+          "MongoDB",
+          "Mongo"
+        ],
+        "implies": [
+          "Database Management",
+          "NoSQL"
+        ]
+      },
+      {
+        "name": "SQL Server",
+        "aliases": [
+          "SQL Server",
+          "Microsoft SQL Server",
+          "MSSQL",
+          "T-SQL",
+          "TSQL"
+        ],
+        "implies": [
+          "Database Management",
+          "SQL"
+        ]
+      },
+      {
+        "name": "Oracle",
+        "aliases": [
+          "Oracle Database",
+          "Oracle DB",
+          "PL/SQL",
+          "PLSQL"
+        ],
+        "implies": [
+          "Database Management",
+          "SQL"
+        ]
+      },
+      {
+        "name": "Snowflake",
+        "aliases": [
+          "Snowflake"
+        ],
+        "implies": [
+          "Data Warehousing",
+          "Cloud Computing",
+          "SQL"
+        ]
+      },
+      {
+        "name": "BigQuery",
+        "aliases": [
+          "BigQuery",
+          "Google BigQuery"
+        ],
+        "implies": [
+          "Data Warehousing",
+          "Cloud Computing",
+          "SQL"
+        ]
+      },
+      {
+        "name": "Redshift",
+        "aliases": [
+          "Redshift",
+          "Amazon Redshift"
+        ],
+        "implies": [
+          "Data Warehousing",
+          "Cloud Computing"
+        ]
+      },
+      {
+        "name": "Redis",
+        "aliases": [
+          "Redis"
+        ],
+        "implies": [
+          "Database Management",
+          "NoSQL"
+        ]
+      },
+      {
+        "name": "Elasticsearch",
+        "aliases": [
+          "Elasticsearch",
+          "ELK"
+        ],
+        "implies": [
+          "Database Management"
+        ]
+      },
+      {
+        "name": "Data Warehousing",
+        "aliases": [
+          "Data Warehousing",
+          "Data Warehouse",
+          "DWH"
+        ],
+        "implies": [
+          "Data Modeling",
+          "Database Management"
+        ]
+      },
+      {
+        "name": "NoSQL",
+        "aliases": [
+          "NoSQL",
+          "Non relational database"
+        ],
+        "implies": [
+          "Database Management"
+        ]
+      },
+      {
+        "name": "Database Management",
+        "aliases": [
+          "Database Management",
+          "Database Administration",
+          "DBA"
+        ]
+      },
+      {
+        "name": "Query Optimization",
+        "aliases": [
+          "Query Optimization",
+          "Query Tuning",
+          "SQL Optimization",
+          "Performance Tuning"
+        ]
+      }
+    ],
+    "Visualization Tools": [
+      {
+        "name": "Power BI",
+        "aliases": [
+          "Power BI",
+          "Microsoft Power BI",
+          "PowerBI",
+          "Power-BI",
+          "DAX",
+          "Power Query"
+        ],
+        "implies": [
+          "Dashboard Development",
+          "Data Visualization",
+          "Business Intelligence",
+          "Reporting"
+        ],
+        "weight": 1.3
+      },
+      {
+        "name": "Tableau",
+        "aliases": [
+          "Tableau",
+          "Tableau Desktop",
+          "Tableau Server"
+        ],
+        "implies": [
+          "Dashboard Development",
+          "Data Visualization",
+          "Business Intelligence",
+          "Reporting"
+        ],
+        "weight": 1.2
+      },
+      {
+        "name": "Looker",
+        "aliases": [
+          "Looker",
+          "Looker Studio",
+          "Google Data Studio",
+          "Data Studio"
+        ],
+        "implies": [
+          "Dashboard Development",
+          "Data Visualization",
+          "Business Intelligence"
+        ]
+      },
+      {
+        "name": "Qlik",
+        "aliases": [
+          "Qlik",
+          "QlikView",
+          "Qlik Sense"
+        ],
+        "implies": [
+          "Dashboard Development",
+          "Data Visualization",
+          "Business Intelligence"
+        ]
+      },
+      {
+        "name": "Excel",
+        "aliases": [
+          "Excel",
+          "Microsoft Excel",
+          "MS Excel",
+          "Advanced Excel",
+          "Pivot Tables",
+          "Pivot Table"
+        ],
+        "implies": [
+          "Reporting",
+          "Data Analysis",
+          "Data Visualization"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Google Sheets",
+        "aliases": [
+          "Google Sheets",
+          "Spreadsheets"
+        ],
+        "implies": [
+          "Reporting"
+        ]
+      },
+      {
+        "name": "Matplotlib",
+        "aliases": [
+          "Matplotlib",
+          "Pyplot"
+        ],
+        "implies": [
+          "Data Visualization"
+        ]
+      },
+      {
+        "name": "Seaborn",
+        "aliases": [
+          "Seaborn"
+        ],
+        "implies": [
+          "Data Visualization"
+        ]
+      },
+      {
+        "name": "Plotly",
+        "aliases": [
+          "Plotly",
+          "Dash"
+        ],
+        "implies": [
+          "Data Visualization",
+          "Dashboard Development"
+        ]
+      },
+      {
+        "name": "Dashboard Development",
+        "aliases": [
+          "Dashboard Development",
+          "Dashboards",
+          "Dashboard",
+          "Dashboarding",
+          "Build dashboards",
+          "Develop dashboards",
+          "Create dashboards",
+          "Interactive dashboards"
+        ],
+        "implies": [
+          "Data Visualization",
+          "Reporting"
+        ],
+        "weight": 1.2
+      },
+      {
+        "name": "Data Visualization",
+        "aliases": [
+          "Data Visualization",
+          "Data Visualisation",
+          "Visual Analytics",
+          "Charts and graphs"
+        ],
+        "implies": [
+          "Reporting"
+        ],
+        "weight": 1.1
+      }
+    ],
+    "Machine Learning": [
+      {
+        "name": "Machine Learning",
+        "aliases": [
+          "Machine Learning",
+          "ML models",
+          "Supervised Learning",
+          "Unsupervised Learning",
+          "Predictive Modeling",
+          "Predictive Modelling"
+        ],
+        "implies": [
+          "Statistical Analysis",
+          "Model Evaluation"
+        ],
+        "weight": 1.2
+      },
+      {
+        "name": "Deep Learning",
+        "aliases": [
+          "Deep Learning",
+          "Neural Networks",
+          "Neural Network"
+        ],
+        "implies": [
+          "Machine Learning"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Artificial Intelligence",
+        "aliases": [
+          "Artificial Intelligence",
+          "AI systems",
+          "AI solutions"
+        ],
+        "implies": [
+          "Machine Learning"
+        ]
+      },
+      {
+        "name": "Natural Language Processing",
+        "aliases": [
+          "Natural Language Processing",
+          "NLP",
+          "Text Mining",
+          "Text Analytics"
+        ],
+        "implies": [
+          "Machine Learning"
+        ]
+      },
+      {
+        "name": "Computer Vision",
+        "aliases": [
+          "Computer Vision",
+          "Image Processing",
+          "Image Classification"
+        ],
+        "implies": [
+          "Deep Learning",
+          "Machine Learning"
+        ]
+      },
+      {
+        "name": "Statistical Analysis",
+        "aliases": [
+          "Statistical Analysis",
+          "Statistics",
+          "Hypothesis Testing",
+          "Regression Analysis",
+          "A/B Testing",
+          "AB Testing"
+        ],
+        "implies": [
+          "Data Analysis"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Data Modeling",
+        "aliases": [
+          "Data Modeling",
+          "Data Modelling",
+          "Dimensional Modeling",
+          "Star Schema",
+          "Schema Design"
+        ],
+        "implies": [
+          "Data Analysis"
+        ]
+      },
+      {
+        "name": "Feature Engineering",
+        "aliases": [
+          "Feature Engineering",
+          "Feature Selection"
+        ],
+        "implies": [
+          "Machine Learning",
+          "Data Cleaning"
+        ]
+      },
+      {
+        "name": "Model Evaluation",
+        "aliases": [
+          "Model Evaluation",
+          "Model Validation",
+          "Cross Validation",
+          "Model Tuning",
+          "Hyperparameter Tuning"
+        ],
+        "implies": [
+          "Machine Learning"
+        ]
+      },
+      {
+        "name": "MLOps",
+        "aliases": [
+          "MLOps",
+          "Model Deployment",
+          "Model Monitoring"
+        ],
+        "implies": [
+          "Machine Learning",
+          "DevOps"
+        ]
+      },
+      {
+        "name": "Time Series Analysis",
+        "aliases": [
+          "Time Series",
+          "Forecasting",
+          "Time Series Analysis"
+        ],
+        "implies": [
+          "Statistical Analysis",
+          "Machine Learning"
+        ]
+      }
+    ],
+    "Cloud Platforms": [
+      {
+        "name": "AWS",
+        "aliases": [
+          "AWS",
+          "Amazon Web Services",
+          "EC2",
+          "S3",
+          "Lambda"
+        ],
+        "implies": [
+          "Cloud Computing"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Azure",
+        "aliases": [
+          "Azure",
+          "Microsoft Azure",
+          "Azure Data Factory",
+          "Synapse"
+        ],
+        "implies": [
+          "Cloud Computing"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "GCP",
+        "aliases": [
+          "GCP",
+          "Google Cloud Platform",
+          "Google Cloud"
+        ],
+        "implies": [
+          "Cloud Computing"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Databricks",
+        "aliases": [
+          "Databricks"
+        ],
+        "implies": [
+          "Cloud Computing",
+          "Big Data",
+          "Spark"
+        ]
+      },
+      {
+        "name": "Docker",
+        "aliases": [
+          "Docker",
+          "Containerization",
+          "Containers"
+        ],
+        "implies": [
+          "DevOps"
+        ]
+      },
+      {
+        "name": "Kubernetes",
+        "aliases": [
+          "Kubernetes",
+          "K8s"
+        ],
+        "implies": [
+          "DevOps",
+          "Cloud Computing"
+        ]
+      },
+      {
+        "name": "Cloud Computing",
+        "aliases": [
+          "Cloud Computing",
+          "Cloud Infrastructure",
+          "Cloud Platforms"
+        ]
+      }
+    ],
+    "Libraries": [
+      {
+        "name": "Pandas",
+        "aliases": [
+          "Pandas"
+        ],
+        "implies": [
+          "Data Cleaning",
+          "Data Analysis",
+          "Data Manipulation",
+          "Python"
+        ],
+        "weight": 1.2
+      },
+      {
+        "name": "NumPy",
+        "aliases": [
+          "NumPy",
+          "Numpy"
+        ],
+        "implies": [
+          "Data Analysis",
+          "Python"
+        ]
+      },
+      {
+        "name": "Scikit-learn",
+        "aliases": [
+          "Scikit-learn",
+          "Sklearn",
+          "Scikit learn"
+        ],
+        "implies": [
+          "Machine Learning",
+          "Model Evaluation",
+          "Python"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "TensorFlow",
+        "aliases": [
+          "TensorFlow",
+          "Keras"
+        ],
+        "implies": [
+          "Deep Learning",
+          "Machine Learning",
+          "Python"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "PyTorch",
+        "aliases": [
+          "PyTorch",
+          "Torch"
+        ],
+        "implies": [
+          "Deep Learning",
+          "Machine Learning",
+          "Python"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Spark",
+        "aliases": [
+          "Spark",
+          "Apache Spark",
+          "PySpark"
+        ],
+        "implies": [
+          "Big Data",
+          "Data Engineering"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Hadoop",
+        "aliases": [
+          "Hadoop",
+          "HDFS",
+          "MapReduce"
+        ],
+        "implies": [
+          "Big Data"
+        ]
+      },
+      {
+        "name": "Airflow",
+        "aliases": [
+          "Airflow",
+          "Apache Airflow"
+        ],
+        "implies": [
+          "ETL",
+          "Data Engineering",
+          "Automation"
+        ]
+      },
+      {
+        "name": "dbt",
+        "aliases": [
+          "dbt",
+          "data build tool"
+        ],
+        "implies": [
+          "ETL",
+          "Data Engineering",
+          "SQL"
+        ]
+      },
+      {
+        "name": "Flask",
+        "aliases": [
+          "Flask"
+        ],
+        "implies": [
+          "Web Development",
+          "API Development",
+          "Python"
+        ]
+      },
+      {
+        "name": "FastAPI",
+        "aliases": [
+          "FastAPI"
+        ],
+        "implies": [
+          "Web Development",
+          "API Development",
+          "Python"
+        ]
+      },
+      {
+        "name": "Django",
+        "aliases": [
+          "Django"
+        ],
+        "implies": [
+          "Web Development",
+          "Python"
+        ]
+      },
+      {
+        "name": "React",
+        "aliases": [
+          "React",
+          "ReactJS",
+          "React.js"
+        ],
+        "implies": [
+          "Web Development"
+        ]
+      },
+      {
+        "name": "Streamlit",
+        "aliases": [
+          "Streamlit"
+        ],
+        "implies": [
+          "Dashboard Development",
+          "Data Visualization",
+          "Python"
+        ]
+      }
+    ],
+    "Engineering Practices": [
+      {
+        "name": "Git",
+        "aliases": [
+          "Git",
+          "Version Control",
+          "GitHub",
+          "GitLab",
+          "Bitbucket"
+        ],
+        "implies": [
+          "Collaboration"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "ETL",
+        "aliases": [
+          "ETL",
+          "ELT",
+          "Data Pipelines",
+          "Data Pipeline",
+          "Extract Transform Load"
+        ],
+        "implies": [
+          "Data Engineering",
+          "Automation"
+        ],
+        "weight": 1.2
+      },
+      {
+        "name": "Data Engineering",
+        "aliases": [
+          "Data Engineering",
+          "Data Infrastructure"
+        ],
+        "implies": [
+          "ETL",
+          "Database Management"
+        ]
+      },
+      {
+        "name": "Big Data",
+        "aliases": [
+          "Big Data",
+          "Distributed Computing"
+        ]
+      },
+      {
+        "name": "API Development",
+        "aliases": [
+          "API Development",
+          "REST API",
+          "RESTful",
+          "APIs",
+          "GraphQL"
+        ],
+        "implies": [
+          "Web Development"
+        ]
+      },
+      {
+        "name": "Automation",
+        "aliases": [
+          "Automation",
+          "Automated workflows",
+          "Process Automation",
+          "Scripting"
+        ]
+      },
+      {
+        "name": "DevOps",
+        "aliases": [
+          "DevOps",
+          "CI/CD",
+          "Continuous Integration",
+          "Continuous Deployment",
+          "Jenkins"
+        ],
+        "implies": [
+          "Automation"
+        ]
+      },
+      {
+        "name": "Testing",
+        "aliases": [
+          "Unit Testing",
+          "Test Automation",
+          "Pytest",
+          "QA"
+        ],
+        "implies": [
+          "Automation"
+        ]
+      },
+      {
+        "name": "Agile",
+        "aliases": [
+          "Agile",
+          "Scrum",
+          "Kanban",
+          "Sprint planning"
+        ],
+        "implies": [
+          "Project Management",
+          "Collaboration"
+        ]
+      },
+      {
+        "name": "Jira",
+        "aliases": [
+          "Jira",
+          "Confluence"
+        ],
+        "implies": [
+          "Project Management",
+          "Agile"
+        ]
+      },
+      {
+        "name": "Object Oriented Programming",
+        "aliases": [
+          "Object Oriented Programming",
+          "OOP"
+        ]
+      },
+      {
+        "name": "Web Development",
+        "aliases": [
+          "Web Development",
+          "Frontend",
+          "Backend",
+          "Full Stack"
+        ]
+      },
+      {
+        "name": "Scripting",
+        "aliases": [
+          "Scripting"
+        ],
+        "implies": [
+          "Automation"
+        ]
+      },
+      {
+        "name": "Data Manipulation",
+        "aliases": [
+          "Data Manipulation",
+          "Data Wrangling",
+          "Data Munging"
+        ],
+        "implies": [
+          "Data Cleaning"
+        ]
+      }
+    ],
+    "Business Skills": [
+      {
+        "name": "Business Intelligence",
+        "aliases": [
+          "Business Intelligence",
+          "BI tools",
+          "BI reporting",
+          "BI developer",
+          "BI analyst"
+        ],
+        "implies": [
+          "Reporting",
+          "Data Analysis"
+        ],
+        "weight": 1.2
+      },
+      {
+        "name": "Data Analysis",
+        "aliases": [
+          "Data Analysis",
+          "Data Analytics",
+          "Analyse data",
+          "Analyze data",
+          "Analysing data",
+          "Analyzing data",
+          "Analytical skills",
+          "Data driven"
+        ],
+        "implies": [
+          "Reporting"
+        ],
+        "weight": 1.3
+      },
+      {
+        "name": "Data Cleaning",
+        "aliases": [
+          "Data Cleaning",
+          "Data Cleansing",
+          "Data Preparation",
+          "Data Preprocessing",
+          "Data Quality"
+        ],
+        "implies": [
+          "Data Manipulation"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Reporting",
+        "aliases": [
+          "Reporting",
+          "Reports",
+          "Report Development",
+          "Management Reporting",
+          "Automated reports"
+        ],
+        "weight": 1.1
+      },
+      {
+        "name": "Requirements Gathering",
+        "aliases": [
+          "Requirements Gathering",
+          "Business Requirements",
+          "Stakeholder Requirements",
+          "Gap Analysis"
+        ],
+        "implies": [
+          "Stakeholder Management"
+        ]
+      },
+      {
+        "name": "Stakeholder Management",
+        "aliases": [
+          "Stakeholder Management",
+          "Stakeholder Engagement",
+          "Client Management",
+          "Stakeholder reporting"
+        ],
+        "implies": [
+          "Communication"
+        ]
+      },
+      {
+        "name": "Project Management",
+        "aliases": [
+          "Project Management",
+          "Project Delivery",
+          "Project Planning"
+        ],
+        "implies": [
+          "Leadership",
+          "Organization"
+        ]
+      },
+      {
+        "name": "KPI Tracking",
+        "aliases": [
+          "KPI",
+          "KPIs",
+          "Key Performance Indicators",
+          "Metrics tracking",
+          "Performance Metrics"
+        ],
+        "implies": [
+          "Reporting",
+          "Business Intelligence"
+        ]
+      },
+      {
+        "name": "Financial Analysis",
+        "aliases": [
+          "Financial Analysis",
+          "Budgeting",
+          "Forecasting analysis",
+          "Cost Analysis"
+        ],
+        "implies": [
+          "Data Analysis"
+        ]
+      },
+      {
+        "name": "Process Improvement",
+        "aliases": [
+          "Process Improvement",
+          "Process Optimization",
+          "Operational Efficiency"
+        ]
+      },
+      {
+        "name": "Domain Knowledge",
+        "aliases": [
+          "Domain Knowledge",
+          "Industry Knowledge",
+          "Business Acumen"
+        ]
+      }
+    ],
+    "Soft Skills": [
+      {
+        "name": "Communication",
+        "aliases": [
+          "Communication",
+          "Communications",
+          "Communication skills",
+          "Verbal communication",
+          "Written communication",
+          "Presentation skills",
+          "Presenting findings"
+        ]
+      },
+      {
+        "name": "Problem Solving",
+        "aliases": [
+          "Problem Solving",
+          "Problem-solving",
+          "Troubleshooting",
+          "Critical Thinking"
+        ]
+      },
+      {
+        "name": "Teamwork",
+        "aliases": [
+          "Teamwork",
+          "Collaboration",
+          "Cross functional",
+          "Cross-functional",
+          "Team player"
+        ]
+      },
+      {
+        "name": "Leadership",
+        "aliases": [
+          "Leadership",
+          "Team Lead",
+          "Mentoring",
+          "Mentorship",
+          "Managed a team"
+        ]
+      },
+      {
+        "name": "Analytical Thinking",
+        "aliases": [
+          "Analytical Thinking",
+          "Analytical mindset",
+          "Analytical skills",
+          "Logical reasoning"
+        ],
+        "implies": [
+          "Problem Solving"
+        ]
+      },
+      {
+        "name": "Attention to Detail",
+        "aliases": [
+          "Attention to Detail",
+          "Detail oriented",
+          "Detail-oriented",
+          "Accuracy"
+        ]
+      },
+      {
+        "name": "Adaptability",
+        "aliases": [
+          "Adaptability",
+          "Flexible",
+          "Fast paced environment"
+        ]
+      },
+      {
+        "name": "Time Management",
+        "aliases": [
+          "Time Management",
+          "Prioritization",
+          "Meeting deadlines"
+        ],
+        "implies": [
+          "Organization"
+        ]
+      },
+      {
+        "name": "Organization",
+        "aliases": [
+          "Organizational skills",
+          "Organised",
+          "Organized"
+        ]
+      },
+      {
+        "name": "Curiosity",
+        "aliases": [
+          "Curiosity",
+          "Continuous Learning",
+          "Self motivated",
+          "Eager to learn"
+        ]
+      }
+    ],
+    "Certifications": [
+      {
+        "name": "Microsoft Certified Data Analyst",
+        "aliases": [
+          "PL-300",
+          "DA-100",
+          "Microsoft Certified Data Analyst",
+          "Power BI Data Analyst Associate"
+        ],
+        "implies": [
+          "Power BI",
+          "Business Intelligence"
+        ]
+      },
+      {
+        "name": "Azure Data Engineer Associate",
+        "aliases": [
+          "DP-203",
+          "Azure Data Engineer"
+        ],
+        "implies": [
+          "Azure",
+          "Data Engineering"
+        ]
+      },
+      {
+        "name": "Azure Fundamentals",
+        "aliases": [
+          "AZ-900",
+          "Azure Fundamentals"
+        ],
+        "implies": [
+          "Azure"
+        ]
+      },
+      {
+        "name": "AWS Certified Solutions Architect",
+        "aliases": [
+          "AWS Certified Solutions Architect",
+          "AWS Solutions Architect"
+        ],
+        "implies": [
+          "AWS",
+          "Cloud Computing"
+        ]
+      },
+      {
+        "name": "AWS Certified Data Analytics",
+        "aliases": [
+          "AWS Certified Data Analytics"
+        ],
+        "implies": [
+          "AWS",
+          "Data Analysis"
+        ]
+      },
+      {
+        "name": "Google Data Analytics Certificate",
+        "aliases": [
+          "Google Data Analytics Certificate",
+          "Google Data Analytics Professional"
+        ],
+        "implies": [
+          "Data Analysis"
+        ]
+      },
+      {
+        "name": "Tableau Desktop Specialist",
+        "aliases": [
+          "Tableau Desktop Specialist",
+          "Tableau Certified"
+        ],
+        "implies": [
+          "Tableau"
+        ]
+      },
+      {
+        "name": "Certified Scrum Master",
+        "aliases": [
+          "Certified Scrum Master",
+          "CSM",
+          "PSM"
+        ],
+        "implies": [
+          "Agile",
+          "Project Management"
+        ]
+      },
+      {
+        "name": "PMP",
+        "aliases": [
+          "PMP",
+          "Project Management Professional"
+        ],
+        "implies": [
+          "Project Management"
+        ]
+      },
+      {
+        "name": "Six Sigma",
+        "aliases": [
+          "Six Sigma",
+          "Lean Six Sigma",
+          "Green Belt",
+          "Black Belt"
+        ],
+        "implies": [
+          "Process Improvement"
+        ]
+      },
+      {
+        "name": "Oracle Certified Professional",
+        "aliases": [
+          "Oracle Certified Professional",
+          "OCP"
+        ],
+        "implies": [
+          "Oracle"
+        ]
+      },
+      {
+        "name": "Databricks Certified",
+        "aliases": [
+          "Databricks Certified"
+        ],
+        "implies": [
+          "Databricks",
+          "Spark"
+        ]
+      }
+    ]
+  },
+  "recommendations": {
+    "Power BI": "Add a Power BI project with the business question it answered and who used the dashboard.",
+    "Tableau": "Add a Tableau workbook or visual analytics example, ideally with the audience named.",
+    "Looker": "Mention Looker or Looker Studio reporting work and the metrics you exposed.",
+    "Qlik": "Include Qlik Sense or QlikView dashboards you built and their business owner.",
+    "Excel": "Show advanced Excel work such as pivot tables, lookups, or automated reporting models.",
+    "Google Sheets": "Mention collaborative reporting built in Google Sheets.",
+    "SQL": "Include SQL work with joins, aggregations, or window functions against a named database.",
+    "MySQL": "Name MySQL explicitly alongside the queries or schemas you worked with.",
+    "PostgreSQL": "Mention PostgreSQL work, including any performance tuning you did.",
+    "SQL Server": "Show Microsoft SQL Server experience such as T-SQL queries or SSRS reporting.",
+    "Oracle": "Include Oracle or PL/SQL experience if you have it.",
+    "MongoDB": "Add a MongoDB project showing document modelling or aggregation pipelines.",
+    "Snowflake": "Mention Snowflake warehousing work and the data volumes involved.",
+    "BigQuery": "Include BigQuery analysis and any cost or performance optimisation.",
+    "Redshift": "Mention Amazon Redshift warehousing or query work.",
+    "Data Warehousing": "Describe a warehouse you designed or loaded, including the modelling approach.",
+    "Query Optimization": "Give an example where you tuned a slow query and state the improvement.",
+    "Database Management": "Show ownership of a database: schema design, indexing, or maintenance.",
+    "Python": "Add a Python project and name the libraries you used.",
+    "R": "Include R work such as statistical modelling or ggplot2 reporting.",
+    "Java": "Include Java development or object-oriented design work.",
+    "C++": "Include C++ systems or performance-oriented experience.",
+    "C#": "Mention C# or .NET development work.",
+    "JavaScript": "Add JavaScript or front-end work if it is relevant to the role.",
+    "Scala": "Mention Scala experience, especially alongside Spark.",
+    "MATLAB": "Include MATLAB modelling or signal processing work.",
+    "SAS": "Mention SAS analytics or reporting experience.",
+    "VBA": "Show Excel automation built with VBA macros and the time it saved.",
+    "Bash": "Mention shell scripting used to automate a recurring task.",
+    "Pandas": "Show data cleaning and analysis work with Pandas, including dataset size.",
+    "NumPy": "Mention numerical computing tasks handled with NumPy.",
+    "Scikit-learn": "Include a supervised or unsupervised learning project built with Scikit-learn.",
+    "TensorFlow": "Add a deep learning project using TensorFlow or Keras with its evaluation metric.",
+    "PyTorch": "Add a deep learning project using PyTorch with its evaluation metric.",
+    "Spark": "Mention Spark or PySpark work and the scale of data processed.",
+    "Hadoop": "Include Hadoop ecosystem experience if the role handles large datasets.",
+    "Airflow": "Describe an Airflow DAG you built and what it orchestrated.",
+    "dbt": "Mention dbt models you own and how they are tested.",
+    "Flask": "Add a Flask service or API you built.",
+    "FastAPI": "Mention a FastAPI service and what it served.",
+    "Django": "Include Django application work.",
+    "React": "Mention React front-end work if the role expects it.",
+    "Streamlit": "Add a Streamlit app you deployed to share analysis.",
+    "Machine Learning": "Add a machine learning project with the business use case and a measured result.",
+    "Deep Learning": "Include a deep learning project and the architecture you used.",
+    "Artificial Intelligence": "Mention AI projects or model-driven automation you contributed to.",
+    "Natural Language Processing": "Add an NLP project such as classification, extraction, or sentiment work.",
+    "Computer Vision": "Include a computer vision project and its accuracy or business outcome.",
+    "Statistical Analysis": "Show statistical work such as hypothesis testing, regression, or experiment design.",
+    "Data Modeling": "Describe a data model you designed, including grain and key relationships.",
+    "Feature Engineering": "Explain features you engineered and their effect on model performance.",
+    "Model Evaluation": "State how you validated models: metrics, cross-validation, or holdout design.",
+    "MLOps": "Mention how models were deployed, monitored, or retrained.",
+    "Time Series Analysis": "Add forecasting work and how accuracy was measured.",
+    "AWS": "Name the AWS services you used and what you built with them.",
+    "Azure": "Include Azure services such as Data Factory or Synapse and what they powered.",
+    "GCP": "Mention Google Cloud services you have worked with.",
+    "Databricks": "Describe Databricks notebooks or jobs you ran and the data scale.",
+    "Docker": "Mention containerising an application or analysis environment.",
+    "Kubernetes": "Include Kubernetes deployment experience if relevant.",
+    "Cloud Computing": "Show that your work ran on cloud infrastructure rather than only locally.",
+    "Git": "Mention your Git workflow: branching, pull requests, or code review.",
+    "ETL": "Describe an ETL or ELT pipeline you built, its sources, and its schedule.",
+    "Data Engineering": "Show ownership of data infrastructure, not just consumption of it.",
+    "Big Data": "State dataset sizes so large-scale experience is visible.",
+    "API Development": "Mention APIs you built or consumed and their purpose.",
+    "Automation": "Add an automation example and quantify the manual effort removed.",
+    "DevOps": "Mention CI/CD pipelines you set up or maintained.",
+    "Testing": "Show that you write tests for your code or validate your data.",
+    "Agile": "Mention working in Agile sprints and your role in ceremonies.",
+    "Jira": "Reference Jira or Confluence if the role expects structured delivery.",
+    "Object Oriented Programming": "Show object-oriented design in at least one project.",
+    "Web Development": "Include web development work if the role touches applications.",
+    "Data Manipulation": "Show reshaping, joining, or aggregating messy data before analysis.",
+    "Business Intelligence": "Show BI delivery: who consumed your reports and what decisions they drove.",
+    "Data Analysis": "Add analysis achievements that state the insight and the decision it changed.",
+    "Data Cleaning": "Describe how you prepared or validated datasets before analysis.",
+    "Dashboard Development": "Highlight a dashboard you built, the business problem, and its users.",
+    "Data Visualization": "Show that you choose visualisations deliberately for the audience.",
+    "Reporting": "Include recurring reports you own and their audience.",
+    "Requirements Gathering": "Show that you gathered requirements from stakeholders before building.",
+    "Stakeholder Management": "Add examples of presenting to or negotiating with stakeholders.",
+    "Project Management": "Mention projects you led end to end, with timeline and scope.",
+    "KPI Tracking": "Name the KPIs you tracked and how they were used.",
+    "Financial Analysis": "Include budgeting, forecasting, or cost analysis work.",
+    "Process Improvement": "Add an example where you improved a process and quantify the gain.",
+    "Domain Knowledge": "Make your industry context explicit so domain fit is visible.",
+    "Communication": "Show examples of presenting findings to stakeholders or non-technical audiences.",
+    "Problem Solving": "Add an example where you diagnosed and solved a difficult problem.",
+    "Teamwork": "Mention cross-functional collaboration and your role within the team.",
+    "Leadership": "Include mentoring, leading a workstream, or owning a delivery.",
+    "Analytical Thinking": "Demonstrate structured reasoning in at least one bullet, not just the word itself.",
+    "Attention to Detail": "Show accuracy through validation, QA, or reconciliation work.",
+    "Adaptability": "Give an example of adjusting to changing priorities.",
+    "Time Management": "Show that you delivered against deadlines under competing priorities.",
+    "Organization": "Show structured ownership of parallel workstreams.",
+    "Curiosity": "Mention self-directed learning, courses, or side projects.",
+    "Microsoft Certified Data Analyst": "Consider the PL-300 certification; it is frequently listed for BI roles.",
+    "Azure Data Engineer Associate": "Consider the DP-203 certification if the role is Azure-based.",
+    "Azure Fundamentals": "AZ-900 is a quick credential that signals cloud familiarity.",
+    "AWS Certified Solutions Architect": "Consider an AWS certification if the stack is AWS-based.",
+    "AWS Certified Data Analytics": "An AWS data analytics certification would strengthen cloud credibility.",
+    "Google Data Analytics Certificate": "The Google Data Analytics certificate can offset limited commercial experience.",
+    "Tableau Desktop Specialist": "The Tableau Desktop Specialist exam is a low-cost credibility signal.",
+    "Certified Scrum Master": "A Scrum certification helps if the role emphasises Agile delivery.",
+    "PMP": "PMP is worth listing if the role is delivery-focused.",
+    "Six Sigma": "Six Sigma certification supports process improvement roles.",
+    "Oracle Certified Professional": "An Oracle certification helps for Oracle-heavy environments.",
+    "Databricks Certified": "A Databricks certification supports lakehouse or Spark roles."
+  },
+  "concept_only": [
+    "Collaboration",
+    "NoSQL"
+  ]
+}

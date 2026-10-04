@@ -1,0 +1,573 @@
+{
+  "organization_name": "Logxperts",
+  "executive_summary": "Logxperts is a technology delivery organization providing end-to-end digital transformation and software engineering services across full-stack development, mobile applications, AI/ML, Agentic AI, computer vision, data and BI, cloud, enterprise integration, IoT, automation and staff augmentation.",
+  "capability_areas": [
+    {
+      "name": "Full-Stack Software Development",
+      "description": "End-to-end web and enterprise application development covering requirements analysis, solution architecture, UI/UX, front-end and back-end development, API development, database architecture, microservices, integration, QA, DevOps/CI-CD, deployment and support, using React, React Native, Node.js, TypeScript, NestJS, Python, Django, PostgreSQL, MongoDB and cloud-native technologies.",
+      "keywords": [
+        "full stack",
+        "web development",
+        "react",
+        "typescript",
+        "node",
+        "nestjs",
+        "python",
+        "django",
+        "postgresql",
+        "mongodb",
+        "api",
+        "rest",
+        "microservices",
+        "frontend",
+        "front end",
+        "backend",
+        "back end",
+        "software engineering",
+        "software development",
+        "ui ux",
+        "devops",
+        "ci cd",
+        "database"
+      ]
+    },
+    {
+      "name": "Web Application Development",
+      "description": "Scalable, secure web applications for enterprises and public-sector organizations, including portals, MIS, workflow platforms, ERP/CRM-related applications, operational dashboards and reporting portals built on modular, scalable architectures.",
+      "keywords": [
+        "web application",
+        "portal",
+        "erp",
+        "crm",
+        "dashboard",
+        "workflow",
+        "business process automation",
+        "reporting",
+        "enterprise portal",
+        "management information system"
+      ]
+    },
+    {
+      "name": "Mobile Application Development",
+      "description": "Native and cross-platform mobile applications for Android and iOS, including customer-facing, employee, field-force, financial services and AI-enabled mobile apps, built primarily with React Native.",
+      "keywords": [
+        "mobile",
+        "android",
+        "ios",
+        "react native",
+        "mobile application",
+        "app development",
+        "field force",
+        "mobile app"
+      ]
+    },
+    {
+      "name": "Artificial Intelligence & Agentic AI",
+      "description": "Generative AI, Agentic AI, AI assistants, intelligent document processing, OCR, NLP, retrieval-augmented generation, AI-powered search and recommendations, predictive analytics and autonomous workflow orchestration, delivered for financial services, microfinance, government and enterprise customers.",
+      "keywords": [
+        "ai",
+        "artificial intelligence",
+        "machine learning",
+        "ml",
+        "generative ai",
+        "agentic ai",
+        "llm",
+        "nlp",
+        "natural language processing",
+        "ocr",
+        "rag",
+        "retrieval augmented generation",
+        "chatbot",
+        "predictive analytics",
+        "automation",
+        "deep learning",
+        "genai"
+      ]
+    },
+    {
+      "name": "Computer Vision & Intelligent Video",
+      "description": "Computer vision solutions including facial recognition, AI-based attendance, access control, footfall analytics, retail shelf monitoring, inventory monitoring, video analytics and AI dashcam solutions, integrable with existing cameras and dashboards.",
+      "keywords": [
+        "computer vision",
+        "cv",
+        "facial recognition",
+        "video analytics",
+        "image processing",
+        "object detection",
+        "surveillance",
+        "opencv"
+      ]
+    },
+    {
+      "name": "Data & Business Intelligence",
+      "description": "Data engineering and analytics services including data warehousing, pipelines, ETL/ELT, business intelligence, dashboards, and advanced/predictive analytics using Power BI, Tableau, BigQuery, Google Cloud, Azure Data Pipelines, Databricks, Delta Lake and PySpark.",
+      "keywords": [
+        "data engineering",
+        "data analytics",
+        "business intelligence",
+        "bi",
+        "power bi",
+        "tableau",
+        "etl",
+        "elt",
+        "data warehouse",
+        "data pipeline",
+        "bigquery",
+        "databricks",
+        "pyspark",
+        "sql",
+        "data visualization",
+        "reporting",
+        "analytics"
+      ]
+    },
+    {
+      "name": "Cloud & Digital Infrastructure",
+      "description": "Cloud migration, cloud architecture, cloud-native and containerized application development, DevOps, CI/CD pipelines, cloud security architecture and infrastructure optimization.",
+      "keywords": [
+        "cloud",
+        "aws",
+        "azure",
+        "gcp",
+        "google cloud",
+        "cloud migration",
+        "devops",
+        "ci cd",
+        "docker",
+        "kubernetes",
+        "containerization",
+        "infrastructure"
+      ]
+    },
+    {
+      "name": "Enterprise Integration",
+      "description": "Integration services connecting applications, databases, devices and enterprise platforms, including REST APIs, ERP/CRM/HRMS integration, IoT integration, payment integrations and authentication/identity integration.",
+      "keywords": [
+        "integration",
+        "api",
+        "rest api",
+        "erp integration",
+        "crm integration",
+        "hrms",
+        "iot",
+        "payment integration",
+        "authentication",
+        "identity",
+        "system integration"
+      ]
+    },
+    {
+      "name": "Technology Staff Augmentation",
+      "description": "Dedicated technology resources and engineering teams for international customers - software engineers, full-stack developers, mobile developers, DevOps/cloud/data engineers, Power BI developers, AI/ML engineers, QA engineers, UI/UX designers, business analysts and project managers.",
+      "keywords": [
+        "staff augmentation",
+        "resource augmentation",
+        "dedicated team",
+        "outsourcing",
+        "offshore team",
+        "remote team",
+        "technology resources",
+        "contract developers"
+      ]
+    },
+    {
+      "name": "Fleet & IoT Solutions",
+      "description": "Connected mobility and fleet-management solutions combining GPS/IoT devices, mobile applications, cloud platforms, dashboards, mapping, analytics and AI-enabled video intelligence.",
+      "keywords": [
+        "iot",
+        "fleet management",
+        "gps tracking",
+        "fleet",
+        "connected devices",
+        "telematics"
+      ]
+    }
+  ],
+  "tech_stack": {
+    "Frontend": {
+      "items": [
+        "React.js",
+        "React Native",
+        "TypeScript",
+        "Modern web technologies"
+      ],
+      "keywords": [
+        "react",
+        "typescript",
+        "javascript",
+        "frontend",
+        "front end",
+        "html",
+        "css"
+      ]
+    },
+    "Backend": {
+      "items": [
+        "Node.js",
+        "NestJS",
+        "Python",
+        "Django",
+        "REST APIs",
+        "Microservices"
+      ],
+      "keywords": [
+        "node",
+        "nestjs",
+        "python",
+        "django",
+        "backend",
+        "back end",
+        "api",
+        "microservices"
+      ]
+    },
+    "Databases": {
+      "items": [
+        "PostgreSQL",
+        "MongoDB",
+        "Relational and NoSQL databases"
+      ],
+      "keywords": [
+        "postgresql",
+        "postgres",
+        "mongodb",
+        "sql",
+        "nosql",
+        "database"
+      ]
+    },
+    "AI/ML": {
+      "items": [
+        "Python",
+        "PyTorch",
+        "LangChain",
+        "Generative AI",
+        "Agentic AI",
+        "OCR",
+        "NLP",
+        "Computer Vision",
+        "RAG architectures",
+        "Vector databases"
+      ],
+      "keywords": [
+        "ai",
+        "ml",
+        "machine learning",
+        "pytorch",
+        "langchain",
+        "generative ai",
+        "agentic ai",
+        "ocr",
+        "nlp",
+        "computer vision",
+        "rag",
+        "vector database",
+        "llm"
+      ]
+    },
+    "Data & Analytics": {
+      "items": [
+        "Power BI",
+        "Tableau",
+        "BigQuery",
+        "Databricks",
+        "Delta Lake",
+        "PySpark",
+        "Azure Data Pipelines",
+        "GCP data services"
+      ],
+      "keywords": [
+        "power bi",
+        "tableau",
+        "bigquery",
+        "databricks",
+        "pyspark",
+        "data pipeline",
+        "data analytics",
+        "azure"
+      ]
+    },
+    "Cloud & DevOps": {
+      "items": [
+        "Cloud-native architectures",
+        "Containerized environments",
+        "CI/CD",
+        "DevOps",
+        "Cloud migration",
+        "Infrastructure integration"
+      ],
+      "keywords": [
+        "cloud",
+        "devops",
+        "ci cd",
+        "docker",
+        "kubernetes",
+        "aws",
+        "azure",
+        "gcp"
+      ]
+    }
+  },
+  "reference_projects": [
+    {
+      "name": "Full-Stack Engineering and Staff Augmentation",
+      "summary": "Software engineering, full-stack engineering and technology staff augmentation for digital initiatives and software engineering requirements.",
+      "keywords": [
+        "full stack",
+        "software engineering",
+        "staff augmentation",
+        "react",
+        "typescript",
+        "node",
+        "engineering",
+        "web development",
+        "backend",
+        "frontend",
+        "api"
+      ]
+    },
+    {
+      "name": "AI-Enabled Banking Process Automation",
+      "summary": "Agentic AI and intelligent business process automation combining AI agents, workflow orchestration, OCR and intelligent document processing to automate complex banking processes and improve operational efficiency.",
+      "keywords": [
+        "ai",
+        "agentic ai",
+        "machine learning",
+        "automation",
+        "ocr",
+        "nlp",
+        "workflow",
+        "financial services",
+        "banking",
+        "process automation",
+        "intelligent document processing"
+      ]
+    },
+    {
+      "name": "Microfinance Loan Processing Modernization",
+      "summary": "AI-enabled modernization of a loan-processing ecosystem using mobile technology, AI agents and intelligent document processing to improve the loan application journey, eligibility assessment and verification.",
+      "keywords": [
+        "ai",
+        "agentic ai",
+        "mobile",
+        "ocr",
+        "machine learning",
+        "financial services",
+        "microfinance",
+        "document processing",
+        "automation"
+      ]
+    },
+    {
+      "name": "Government Digital Transformation",
+      "summary": "Government-sector digital transformation initiative: secure, scalable full-stack application development, business process digitization, enterprise integration and API development.",
+      "keywords": [
+        "full stack",
+        "government",
+        "web development",
+        "api",
+        "integration",
+        "cloud",
+        "digital transformation"
+      ]
+    },
+    {
+      "name": "Workflow Digitization and Reporting",
+      "summary": "Custom software development for workflow digitization, business process automation, application integration and reporting.",
+      "keywords": [
+        "custom software",
+        "workflow",
+        "automation",
+        "integration",
+        "reporting",
+        "cloud"
+      ]
+    },
+    {
+      "name": "Retail Business Process Digitization",
+      "summary": "Enterprise application development and business process digitization, including custom applications, workflow management and operational dashboards.",
+      "keywords": [
+        "enterprise application",
+        "process automation",
+        "workflow",
+        "dashboard",
+        "reporting",
+        "data integration"
+      ]
+    },
+    {
+      "name": "Data Analytics and Power BI Staff Augmentation",
+      "summary": "Specialized Power BI and data analytics resources supporting dashboard development, data modeling, visualization and business reporting.",
+      "keywords": [
+        "power bi",
+        "data analytics",
+        "dashboard",
+        "data visualization",
+        "business intelligence",
+        "staff augmentation",
+        "reporting"
+      ]
+    },
+    {
+      "name": "Social Services Workflow Digitization",
+      "summary": "Digital workflow and process digitization solutions to improve organizational workflows and operational transparency.",
+      "keywords": [
+        "workflow",
+        "digitization",
+        "process automation",
+        "reporting",
+        "social development"
+      ]
+    },
+    {
+      "name": "Insurance Process Automation",
+      "summary": "Digital application development and business process automation, including system integration and reporting dashboards.",
+      "keywords": [
+        "insurance",
+        "process automation",
+        "digital application",
+        "system integration",
+        "dashboard",
+        "workflow"
+      ]
+    },
+    {
+      "name": "Retail Operations Technology",
+      "summary": "Custom technology solutions for digital and retail business operations, including workflow automation and reporting.",
+      "keywords": [
+        "retail",
+        "custom software",
+        "workflow automation",
+        "reporting",
+        "digital business"
+      ]
+    },
+    {
+      "name": "Manufacturing Workflow Digitization",
+      "summary": "Enterprise software solutions for manufacturing and operational workflows, including process digitization and reporting.",
+      "keywords": [
+        "manufacturing",
+        "enterprise application",
+        "process digitization",
+        "operational data",
+        "reporting"
+      ]
+    }
+  ],
+  "industries_served": [
+    "Banking and Financial Services",
+    "Microfinance",
+    "Insurance",
+    "Government and Public Sector",
+    "Telecommunications",
+    "Healthcare and Social Development",
+    "Retail and Consumer",
+    "Manufacturing",
+    "Energy and Utilities",
+    "Transportation and Logistics",
+    "Education",
+    "International Engineering and Consulting",
+    "Technology Services"
+  ],
+  "why_logxperts": [
+    "Proven technology capability across software, mobile, cloud, data, AI and enterprise integration.",
+    "End-to-end delivery from requirements and architecture through development, deployment and support.",
+    "Multi-industry experience spanning banking, microfinance, insurance, government, retail, manufacturing, healthcare and transportation.",
+    "International delivery experience across Pakistan, the GCC and the USA, including offshore and dedicated-resource models.",
+    "Active delivery of Agentic AI, Generative AI, Computer Vision, intelligent automation and advanced analytics.",
+    "Software engineering is complemented by connectivity, cloud and infrastructure expertise.",
+    "Can scale from individual technical resources to complete multidisciplinary project teams."
+  ],
+  "markets": [
+    "Pakistan",
+    "United Arab Emirates",
+    "Qatar",
+    "United States",
+    "GCC",
+    "North America"
+  ],
+  "engagement_models": [
+    {
+      "name": "Technology Staff Augmentation",
+      "description": "Dedicated engineers or complete delivery units embedded with your team, without establishing a local development organization.",
+      "keywords": [
+        "staff augmentation",
+        "dedicated team",
+        "offshore",
+        "remote team",
+        "contract",
+        "resources"
+      ]
+    },
+    {
+      "name": "Turnkey Application Development",
+      "description": "End-to-end delivery of a complete application, from requirements and architecture through deployment and support.",
+      "keywords": [
+        "turnkey",
+        "end to end",
+        "full project",
+        "application development",
+        "product development"
+      ]
+    },
+    {
+      "name": "AI-Led Transformation Programs",
+      "description": "Agentic AI, Generative AI and intelligent automation programs delivered against defined business outcomes.",
+      "keywords": [
+        "ai",
+        "agentic ai",
+        "generative ai",
+        "automation",
+        "transformation",
+        "llm"
+      ]
+    },
+    {
+      "name": "Specialist Delivery Teams",
+      "description": "Multidisciplinary squads combining engineering, UI/UX, QA, DevOps, data and AI skills for a defined scope.",
+      "keywords": [
+        "team",
+        "squad",
+        "multidisciplinary",
+        "project team",
+        "delivery team"
+      ]
+    }
+  ],
+  "delivery_model": [
+    "Discovery - business requirements, stakeholder needs and existing systems assessed",
+    "Analysis & Architecture - requirements translated into technical architecture and integration models",
+    "UI/UX - user journeys, wireframes and interfaces designed for usability and accessibility",
+    "Development - dedicated engineering teams build using modern software engineering practices",
+    "Integration - connected to existing enterprise systems, APIs, databases and third-party platforms",
+    "Testing & QA - functional, integration, performance, security and user acceptance testing",
+    "Deployment - released into the required infrastructure, cloud or containerized environment",
+    "Support & Enhancement - post-deployment support, maintenance and continuous improvement"
+  ],
+  "differentiators": [
+    {
+      "name": "Proven Technology Capability",
+      "description": "Dedicated engineering capability across software, mobile, cloud, data, AI and enterprise integration."
+    },
+    {
+      "name": "End-to-End Delivery",
+      "description": "Engagement from initial requirements and architecture through development, deployment and support."
+    },
+    {
+      "name": "International Delivery Experience",
+      "description": "Engagements delivered across Pakistan, the GCC and the USA, including offshore and dedicated-resource models."
+    },
+    {
+      "name": "AI & Emerging Technology",
+      "description": "Active delivery of Agentic AI, Generative AI, Computer Vision, intelligent automation and advanced analytics."
+    },
+    {
+      "name": "Infrastructure Advantage",
+      "description": "Software engineering is complemented by connectivity, cloud and infrastructure expertise."
+    },
+    {
+      "name": "Scalable Engineering Model",
+      "description": "Scales from individual technical resources to complete multidisciplinary project teams."
+    }
+  ]
+}
