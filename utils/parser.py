@@ -11,7 +11,7 @@ from typing import Iterable
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
 
-import pdfplumber
+from pypdf import PdfReader
 from docx import Document
 from fastapi import HTTPException, UploadFile
 
@@ -369,26 +369,47 @@ def _require_usable_posting(text: str, url: str) -> None:
 
 def extract_text_from_pdf(file_path: Path, preserve_layout: bool = False) -> str:
     extracted_parts: list[str] = []
-    with pdfplumber.open(file_path) as pdf:
-        for page in pdf.pages:
+
+    try:
+        reader = PdfReader(str(file_path))
+
+        for page in reader.pages:
             page_text = page.extract_text() or ""
-            if page_text:
+
+            if page_text.strip():
                 extracted_parts.append(page_text)
+
+    except Exception:
+        extracted_parts = []
 
     if extracted_parts:
         extracted_text = "\n\n".join(extracted_parts)
-        return clean_extracted_text_preserve_layout(extracted_text) if preserve_layout else clean_extracted_text(extracted_text)
+
+        return (
+            clean_extracted_text_preserve_layout(extracted_text)
+            if preserve_layout
+            else clean_extracted_text(extracted_text)
+        )
 
     if fitz is not None:
         doc = fitz.open(file_path)
+
         try:
-            extracted_text = "\n\n".join(page.get_text() for page in doc)
-            return clean_extracted_text_preserve_layout(extracted_text) if preserve_layout else clean_extracted_text(extracted_text)
+            extracted_text = "\n\n".join(
+                page.get_text()
+                for page in doc
+            )
+
+            return (
+                clean_extracted_text_preserve_layout(extracted_text)
+                if preserve_layout
+                else clean_extracted_text(extracted_text)
+            )
+
         finally:
             doc.close()
 
     return ""
-
 
 def extract_text_from_docx(file_path: Path, preserve_layout: bool = False) -> str:
     document = Document(file_path)
