@@ -7,6 +7,8 @@ import sys
 import traceback
 from pathlib import Path
 from typing import Optional
+from saas_api import router as saas_router
+
 
 # On Windows, uvicorn's default event loop (SelectorEventLoop) does not support
 # subprocesses. Playwright launches Chromium as a subprocess, so without this
@@ -101,7 +103,7 @@ app.add_middleware(
 
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 templates = Jinja2Templates(directory=str(TEMPLATES_DIR))
-
+app.include_router(saas_router)
 skills_config = load_skills_config(SKILLS_FILE)
 
 
