@@ -1,45 +1,107 @@
 from __future__ import annotations
 
 import re
-from functools import lru_cache
-
-import spacy
-
-
-@lru_cache(maxsize=1)
-def get_nlp():
-    try:
-        nlp = spacy.load("en_core_web_sm")
-    except Exception:
-        nlp = spacy.blank("en")
-    if nlp.max_length < 2_000_000:
-        nlp.max_length = 2_000_000
-    return nlp
+import unicodedata
 
 
 def normalize_whitespace(text: str) -> str:
-    return re.sub(r"\s+", " ", text).strip()
+    if not text:
+        return ""
+
+    text = text.replace("\r\n", "\n").replace("\r", "\n")
+
+    text = re.sub(
+        r"[ \t\f\v]+",
+        " ",
+        text,
+    )
+
+    text = re.sub(
+        r" *\n *",
+        "\n",
+        text,
+    )
+
+    text = re.sub(
+        r"\n{3,}",
+        "\n\n",
+        text,
+    )
+
+    return text.strip()
+
+
+def normalize_unicode(text: str) -> str:
+    if not text:
+        return ""
+
+    text = unicodedata.normalize(
+        "NFKC",
+        text,
+    )
+
+    replacements = {
+        "\u2018": "'",
+        "\u2019": "'",
+        "\u201c": '"',
+        "\u201d": '"',
+        "\u2013": "-",
+        "\u2014": "-",
+        "\u00a0": " ",
+        "\u2022": " ",
+        "\u25cf": " ",
+        "\u25aa": " ",
+        "\u25e6": " ",
+    }
+
+    for old, new in replacements.items():
+        text = text.replace(
+            old,
+            new,
+        )
+
+    return text
 
 
 def preprocess_text(text: str) -> str:
     if not text:
         return ""
 
-    nlp = get_nlp()
-    lowered = text.lower()
-    doc = nlp(lowered)
-    tokens: list[str] = []
+    text = normalize_unicode(
+        text
+    )
 
-    for token in doc:
-        if token.is_space or token.is_punct or token.is_stop:
-            continue
-        if not token.text.strip():
-            continue
-        if token.like_num:
-            continue
-        lemma = token.lemma_.strip().lower() if token.lemma_ and token.lemma_ != "-pron-" else token.text.strip().lower()
-        lemma = re.sub(r"[^a-z0-9+#.-]", "", lemma)
-        if lemma:
-            tokens.append(lemma)
+    text = text.lower()
 
-    return normalize_whitespace(" ".join(tokens))
+    text = re.sub(
+        r"https?://\S+|www\.\S+",
+        " ",
+        text,
+    )
+
+    text = re.sub(
+        r"\b[\w.+-]+@[\w.-]+\.[a-z]{2,}\b",
+        " ",
+        text,
+        flags=re.IGNORECASE,
+    )
+
+    text = re.sub(
+        r"[^a-z0-9+#./\-\s]",
+        " ",
+        text,
+    )
+
+    text = re.sub(
+        r"[ \t]+",
+        " ",
+        text,
+    )
+
+    text = re.sub(
+        r"\n+",
+        " ",
+        text,
+    )
+
+    return text.strip()
