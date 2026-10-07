@@ -120,6 +120,11 @@ class CandidateProfilePayload(BaseModel):
     clean_text: str = ""
     skills: dict[str, Any] = Field(default_factory=dict)
     name: str = ""
+    email: str = ""
+    phone: str = ""
+    summary: str = ""
+    experience: list[dict[str, Any]] = Field(default_factory=list)
+    education: list[dict[str, Any]] = Field(default_factory=list)
 
 
 class JobPayload(BaseModel):
@@ -190,6 +195,333 @@ def candidate_from_payload(
     )
 
 
+
+SECTION_ALIASES = {
+    "summary": {"summary", "professional summary", "profile", "career summary", "objective", "career objective", "about me"},
+    "experience": {"experience", "work experience", "professional experience", "employment history", "work history", "career history", "employment"},
+    "education": {"education", "academic background", "academic qualifications", "qualifications", "education & qualifications", "education and qualifications"},
+    "skills": {"skills", "technical skills", "core skills", "key skills", "competencies", "technical expertise"},
+    "projects": {"projects", "project experience", "academic projects", "personal projects"},
+    "certifications": {"certifications", "certificates", "licenses & certifications", "licenses and certifications", "courses"},
+}
+
+ALL_SECTION_HEADERS = {
+    alias: key
+    for key, aliases in SECTION_ALIASES.items()
+    for alias in aliases
+}
+
+MONTHS = (
+    "jan|january|feb|february|mar|march|apr|april|may|jun|june|"
+    "jul|july|aug|august|sep|sept|september|oct|october|nov|november|dec|december"
+)
+
+DATE_RANGE_RE = re.compile(
+    rf"(?i)\\b(?:(?:{MONTHS})\\s+)?((?:19|20)\\d{{2}})\\s*"
+    rf"(?:-|–|—|to)\\s*"
+    rf"(?:(?:(?:{MONTHS})\\s+)?((?:19|20)\\d{{2}})|present|current|now)\\b"
+)
+
+YEAR_RE = re.compile(r"\\b(?:19|20)\\d{2}\\b")
+EMAIL_RE = re.compile(r"(?i)(?<![\\w.+-])([A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,})(?![\\w.-])")
+PHONE_RE = re.compile(r"(?<!\\d)(?:\\+?\\d{1,3}[\\s().-]*)?(?:\\d[\\s().-]*){9,14}(?!\\d)")
+
+DEGREE_WORDS = (
+    "bachelor", "master", "phd", "doctorate", "bsc", "bs ", "bs(", "b.s", "msc", "ms ", "m.s", "mba",
+    "bba", "ba ", "b.a", "ma ", "m.a", "associate", "diploma", "degree", "intermediate", "matric", "secondary"
+)
+
+ROLE_WORDS = (
+    "engineer", "developer", "manager", "analyst", "consultant", "specialist", "officer", "executive", "lead",
+    "intern", "designer", "administrator", "coordinator", "scientist", "architect", "supervisor", "director",
+    "accountant", "teacher", "lecturer", "researcher", "assistant", "associate", "technician", "sales", "marketing"
+)
+
+
+def _clean_line(value: str) -> str:
+    value = re.sub(r"[\\t ]+", " ", value or "")
+    return value.strip(" \\t|•·▪◦")
+
+
+def _lines(text: str) -> list[str]:
+    return [_clean_line(line) for line in (text or "").replace("\\r", "\\n").split("\\n")]
+
+
+def _header_key(line: str) -> Optional[str]:
+    normalized = re.sub(r"[^a-z0-9& ]+", "", (line or "").lower()).strip()
+    normalized = re.sub(r"\\s+", " ", normalized)
+    if len(normalized) > 40:
+        return None
+    return ALL_SECTION_HEADERS.get(normalized)
+
+
+def _section(text: str, wanted: str) -> list[str]:
+    lines = _lines(text)
+    collecting = False
+    result: list[str] = []
+
+    for line in lines:
+        key = _header_key(line)
+        if key:
+            if collecting and key != wanted:
+                break
+            collecting = key == wanted
+            continue
+        if collecting:
+            result.append(line)
+
+    while result and not result[0]:
+        result.pop(0)
+    while result and not result[-1]:
+        result.pop()
+    return result
+
+
+def _extract_email(text: str) -> str:
+    match = EMAIL_RE.search(text or "")
+    return match.group(1).strip() if match else ""
+
+
+def _extract_phone(text: str) -> str:
+    for raw in PHONE_RE.findall(text or ""):
+        candidate = re.sub(r"\\s+", " ", raw).strip(" .,-")
+        digits = re.sub(r"\\D", "", candidate)
+        if 10 <= len(digits) <= 15 and not YEAR_RE.fullmatch(digits):
+            return candidate
+    return ""
+
+
+def _extract_summary(layout_text: str) -> str:
+    summary_lines = [line for line in _section(layout_text, "summary") if line]
+    if summary_lines:
+        return " ".join(summary_lines[:8])[:2000]
+
+    candidates = []
+    for line in _lines(layout_text)[:25]:
+        if not line or _header_key(line):
+            continue
+        if "@" in line or PHONE_RE.search(line) or "linkedin.com" in line.lower() or "github.com" in line.lower():
+            continue
+        if len(line.split()) >= 8:
+            candidates.append(line)
+        if len(candidates) >= 3:
+            break
+    return " ".join(candidates)[:2000]
+
+
+def _to_date(year: Optional[str]) -> Optional[str]:
+    return f"{year}-01-01" if year else None
+
+
+def _date_info(text: str) -> tuple[Optional[str], Optional[str], bool]:
+    match = DATE_RANGE_RE.search(text or "")
+    if match:
+        start_year = match.group(1)
+        raw_end = match.group(2)
+        current = bool(re.search(r"(?i)\\b(?:present|current|now)\\b", match.group(0)))
+        end_year = None if current else raw_end
+        return _to_date(start_year), _to_date(end_year), current
+
+    years = YEAR_RE.findall(text or "")
+    if len(years) >= 2:
+        return _to_date(years[0]), _to_date(years[1]), False
+    if len(years) == 1:
+        return _to_date(years[0]), None, False
+    return None, None, False
+
+
+def _split_blocks(section_lines: list[str]) -> list[list[str]]:
+    blocks: list[list[str]] = []
+    current: list[str] = []
+
+    for line in section_lines:
+        if not line:
+            if current:
+                blocks.append(current)
+                current = []
+            continue
+        current.append(line)
+
+    if current:
+        blocks.append(current)
+
+    if len(blocks) <= 1 and section_lines:
+        blocks = []
+        current = []
+        for line in [x for x in section_lines if x]:
+            if current and DATE_RANGE_RE.search(line) and any(DATE_RANGE_RE.search(x) for x in current):
+                blocks.append(current)
+                current = []
+            current.append(line)
+        if current:
+            blocks.append(current)
+
+    return blocks
+
+
+def _looks_like_role(value: str) -> bool:
+    lower = (value or "").lower()
+    return any(word in lower for word in ROLE_WORDS)
+
+
+def _looks_like_degree(value: str) -> bool:
+    lower = f" {(value or '').lower()} "
+    return any(word in lower for word in DEGREE_WORDS)
+
+
+def _extract_experience(layout_text: str) -> list[dict[str, Any]]:
+    lines = _section(layout_text, "experience")
+    if not lines:
+        return []
+
+    rows: list[dict[str, Any]] = []
+    for index, block in enumerate(_split_blocks(lines)):
+        clean = [line for line in block if line]
+        if not clean:
+            continue
+
+        joined = " | ".join(clean)
+        start_date, end_date, is_current = _date_info(joined)
+
+        date_line_index = next((i for i, line in enumerate(clean) if DATE_RANGE_RE.search(line) or YEAR_RE.search(line)), None)
+        identity = clean[:date_line_index] if date_line_index is not None else clean[:3]
+        identity = [re.sub(DATE_RANGE_RE, "", line).strip(" |-–—,") for line in identity]
+        identity = [line for line in identity if line]
+
+        title = ""
+        company = ""
+        location = ""
+
+        for line in identity:
+            parts = [part.strip() for part in re.split(r"\\s*[|•]\\s*", line) if part.strip()]
+            if len(parts) >= 2:
+                role_part = next((part for part in parts if _looks_like_role(part)), "")
+                if role_part:
+                    title = title or role_part
+                    others = [part for part in parts if part != role_part]
+                    company = company or (others[0] if others else "")
+                    if len(others) > 1:
+                        location = location or others[-1]
+                    continue
+            if _looks_like_role(line) and not title:
+                title = line
+            elif not company:
+                company = line
+            elif not location and len(line) < 100:
+                location = line
+
+        if not title and identity:
+            title = identity[0]
+        if not company and len(identity) > 1:
+            company = identity[1]
+
+        description_lines = []
+        for i, line in enumerate(clean):
+            if i < 3 and line in identity:
+                continue
+            if DATE_RANGE_RE.search(line) and len(line.split()) <= 8:
+                continue
+            description_lines.append(line)
+
+        if not any([title, company, start_date, description_lines]):
+            continue
+
+        rows.append({
+            "company_name": company[:255] or None,
+            "job_title": title[:255] or None,
+            "location": location[:255] or None,
+            "start_date": start_date,
+            "end_date": end_date,
+            "is_current": is_current,
+            "description": " ".join(description_lines)[:4000] or None,
+            "skills": [],
+            "sort_order": index,
+        })
+
+    return rows[:20]
+
+
+def _extract_education(layout_text: str) -> list[dict[str, Any]]:
+    lines = _section(layout_text, "education")
+    if not lines:
+        return []
+
+    rows: list[dict[str, Any]] = []
+    for index, block in enumerate(_split_blocks(lines)):
+        clean = [line for line in block if line]
+        if not clean:
+            continue
+
+        joined = " | ".join(clean)
+        start_date, end_date, _ = _date_info(joined)
+
+        degree = next((line for line in clean if _looks_like_degree(line)), "")
+        institution = ""
+        field = ""
+
+        for line in clean:
+            if line == degree or DATE_RANGE_RE.search(line):
+                continue
+            lower = line.lower()
+            if not institution and any(word in lower for word in ("university", "college", "institute", "school", "academy")):
+                institution = line
+                continue
+
+        if degree:
+            degree_clean = re.sub(DATE_RANGE_RE, "", degree).strip(" |-–—,")
+            degree = degree_clean
+            match = re.search(r"(?i)\\b(?:in|of)\\s+(.+)$", degree)
+            if match:
+                field = match.group(1).strip(" ,.-")[:255]
+
+        if not institution:
+            for line in clean:
+                if line != degree and not DATE_RANGE_RE.search(line) and not YEAR_RE.fullmatch(line.strip()):
+                    institution = line
+                    break
+
+        description = " ".join(
+            line for line in clean
+            if line not in {degree, institution}
+            and not (DATE_RANGE_RE.search(line) and len(line.split()) <= 8)
+        )[:3000]
+
+        if not any([institution, degree, start_date, end_date]):
+            continue
+
+        rows.append({
+            "institution": institution[:255] or None,
+            "degree": degree[:255] or None,
+            "field_of_study": field or None,
+            "start_date": start_date,
+            "end_date": end_date,
+            "description": description or None,
+            "sort_order": index,
+        })
+
+    return rows[:15]
+
+
+def extract_structured_profile(profile: CandidateProfile, filename: str) -> dict[str, Any]:
+    layout = profile.layout_text or ""
+    candidate_name = extract_candidate_name(layout, filename)
+    profile.name = candidate_name
+
+    return {
+        "filename": profile.filename,
+        "name": profile.name,
+        "email": _extract_email(layout),
+        "phone": _extract_phone(layout),
+        "summary": _extract_summary(layout),
+        "skills": profile.skills,
+        "experience": _extract_experience(layout),
+        "education": _extract_education(layout),
+        "layout_text": profile.layout_text,
+        "flat_text": profile.flat_text,
+        "clean_text": profile.clean_text,
+    }
+
+
 def analyze_job(
     profile: CandidateProfile,
     job: JobPayload,
@@ -230,350 +562,6 @@ def analyze_job(
         "report": report,
         "job_flat": job_flat,
         "job_layout": job_layout,
-    }
-
-
-# =========================================================
-# PROFILE EXTRACTION HELPERS
-# =========================================================
-
-_PROFILE_SECTION_HEADINGS = {
-    "summary", "professional summary", "profile", "professional profile",
-    "career summary", "objective", "career objective", "about", "about me",
-    "experience", "work experience", "professional experience", "employment",
-    "employment history", "work history", "career history",
-    "education", "academic background", "academic qualification", "qualifications",
-    "skills", "technical skills", "core skills", "competencies", "projects",
-    "certifications", "certificates", "awards", "languages", "references",
-}
-
-
-def _profile_lines(text: str) -> list[str]:
-    return [
-        re.sub(r"\s+", " ", line).strip()
-        for line in (text or "").replace("\r", "\n").split("\n")
-    ]
-
-
-def _heading_key(line: str) -> str:
-    value = re.sub(r"[^a-zA-Z ]+", " ", line or "").lower()
-    return re.sub(r"\s+", " ", value).strip()
-
-
-def _extract_email(text: str) -> str:
-    match = re.search(
-        r"(?i)(?<![\w.+-])([a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,})(?![\w.-])",
-        text or "",
-    )
-    return match.group(1).strip() if match else ""
-
-
-def _extract_phone(text: str) -> str:
-    candidates = re.findall(
-        r"(?<!\d)(?:\+?\d[\d\s().-]{7,}\d)(?!\d)",
-        text or "",
-    )
-    for raw in candidates:
-        digits = re.sub(r"\D", "", raw)
-        if 10 <= len(digits) <= 15:
-            return re.sub(r"\s+", " ", raw).strip(" .,-")
-    return ""
-
-
-def _extract_section(text: str, wanted: set[str]) -> str:
-    raw_lines = (text or "").replace("\r", "\n").split("\n")
-    start = None
-    output: list[str] = []
-
-    for index, raw in enumerate(raw_lines):
-        cleaned = re.sub(r"\s+", " ", raw).strip()
-        key = _heading_key(cleaned)
-
-        if start is None:
-            if key in wanted:
-                start = index + 1
-            continue
-
-        if key in _PROFILE_SECTION_HEADINGS and key not in wanted:
-            break
-
-        output.append(raw.rstrip())
-
-    return "\n".join(output).strip()
-
-
-def _extract_summary(text: str) -> str:
-    section = _extract_section(
-        text,
-        {
-            "summary", "professional summary", "profile", "professional profile",
-            "career summary", "objective", "career objective", "about", "about me",
-        },
-    )
-    if section:
-        return re.sub(r"\s+", " ", section).strip()[:2000]
-    return ""
-
-
-def _split_section_blocks(section: str) -> list[str]:
-    if not section:
-        return []
-
-    blocks = [
-        re.sub(r"\n{3,}", "\n\n", block).strip()
-        for block in re.split(r"\n\s*\n", section)
-        if block.strip()
-    ]
-
-    if len(blocks) > 1:
-        return blocks[:20]
-
-    # Many CV parsers remove blank lines. In that case, start a new block on a
-    # date range line while preserving the preceding identity lines.
-    lines = [line for line in section.splitlines() if line.strip()]
-    date_re = re.compile(
-        r"(?i)\b(?:jan(?:uary)?|feb(?:ruary)?|mar(?:ch)?|apr(?:il)?|may|jun(?:e)?|"
-        r"jul(?:y)?|aug(?:ust)?|sep(?:tember)?|oct(?:ober)?|nov(?:ember)?|dec(?:ember)?|"
-        r"\d{1,2}[/-])?\s*(?:19|20)\d{2}\b.*(?:-|–|—|to).*"
-        r"(?:present|current|now|(?:19|20)\d{2})"
-    )
-
-    result: list[list[str]] = []
-    current: list[str] = []
-    for line in lines:
-        current.append(line)
-        if date_re.search(line) and len(current) > 1:
-            # Keep accumulating description until the next likely identity line.
-            continue
-        if len(current) >= 8:
-            result.append(current)
-            current = []
-    if current:
-        result.append(current)
-
-    return ["\n".join(x).strip() for x in result if x][:20]
-
-
-def _parse_date_range(text: str) -> tuple[str, str, bool]:
-    month = r"(?:Jan(?:uary)?|Feb(?:ruary)?|Mar(?:ch)?|Apr(?:il)?|May|Jun(?:e)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|Oct(?:ober)?|Nov(?:ember)?|Dec(?:ember)?)"
-    date_token = rf"(?:{month}\s+)?((?:19|20)\d{{2}})"
-    match = re.search(
-        rf"(?i){date_token}\s*(?:-|–|—|to)\s*(?:(?:{month}\s+)?((?:19|20)\d{{2}})|(present|current|now))",
-        text or "",
-    )
-    if not match:
-        return "", "", False
-
-    start_year = match.group(1) or ""
-    end_year = match.group(2) or ""
-    current = bool(match.group(3))
-    return (
-        f"{start_year}-01-01" if start_year else "",
-        "" if current else (f"{end_year}-01-01" if end_year else ""),
-        current,
-    )
-
-
-def _extract_experience(text: str) -> list[dict[str, Any]]:
-    section = _extract_section(
-        text,
-        {
-            "experience", "work experience", "professional experience", "employment",
-            "employment history", "work history", "career history",
-        },
-    )
-    if not section:
-        return []
-
-    entries: list[dict[str, Any]] = []
-    for position, block in enumerate(_split_section_blocks(section)):
-        lines = [re.sub(r"\s+", " ", x).strip() for x in block.splitlines() if x.strip()]
-        if not lines:
-            continue
-
-        start_date, end_date, is_current = _parse_date_range(block)
-        date_line_index = next(
-            (i for i, line in enumerate(lines) if re.search(r"\b(?:19|20)\d{2}\b", line)),
-            -1,
-        )
-        identity = lines[:date_line_index] if date_line_index > 0 else lines[:2]
-        identity = [x for x in identity if len(x) <= 160]
-
-        job_title = identity[0] if identity else ""
-        company = identity[1] if len(identity) > 1 else ""
-
-        entries.append({
-            "company_name": company,
-            "job_title": job_title,
-            "location": "",
-            "start_date": start_date,
-            "end_date": end_date,
-            "is_current": is_current,
-            "description": "\n".join(lines)[:5000],
-            "skills": [],
-            "sort_order": position,
-        })
-
-    return entries[:20]
-
-
-def _extract_education(text: str) -> list[dict[str, Any]]:
-    section = _extract_section(
-        text,
-        {"education", "academic background", "academic qualification", "qualifications"},
-    )
-    if not section:
-        return []
-
-    degree_re = re.compile(
-        r"(?i)\b(?:bachelor|master|phd|doctor|b\.?s\.?|b\.?sc\.?|m\.?s\.?|m\.?sc\.?|"
-        r"bba|mba|associate|diploma|degree|intermediate|matric)\b"
-    )
-    school_re = re.compile(r"(?i)\b(?:university|college|institute|school|academy)\b")
-
-    entries: list[dict[str, Any]] = []
-    for position, block in enumerate(_split_section_blocks(section)):
-        lines = [re.sub(r"\s+", " ", x).strip() for x in block.splitlines() if x.strip()]
-        if not lines:
-            continue
-
-        institution = next((x for x in lines if school_re.search(x)), "")
-        degree = next((x for x in lines if degree_re.search(x)), "")
-        start_date, end_date, _ = _parse_date_range(block)
-
-        entries.append({
-            "institution": institution,
-            "degree": degree,
-            "field_of_study": "",
-            "start_date": start_date,
-            "end_date": end_date,
-            "description": "\n".join(lines)[:5000],
-            "sort_order": position,
-        })
-
-    return entries[:20]
-
-
-def _profile_summary_payload(profile: CandidateProfile, original_name: str) -> dict[str, Any]:
-    layout = profile.layout_text or ""
-    return {
-        "filename": profile.filename,
-        "name": profile.name,
-        "email": _extract_email(layout),
-        "phone": _extract_phone(layout),
-        "summary": _extract_summary(layout),
-        "skills": profile.skills,
-        "experience": _extract_experience(layout),
-        "education": _extract_education(layout),
-        "layout_text": profile.layout_text,
-        "flat_text": profile.flat_text,
-        "clean_text": profile.clean_text,
-        "source_filename": original_name,
-    }
-
-
-def _nested_number(data: dict[str, Any], *paths: tuple[str, ...]) -> Optional[float]:
-    for path in paths:
-        value: Any = data
-        for key in path:
-            if not isinstance(value, dict) or key not in value:
-                value = None
-                break
-            value = value[key]
-        if isinstance(value, (int, float)):
-            return float(value)
-        if isinstance(value, str):
-            match = re.search(r"-?\d+(?:\.\d+)?", value)
-            if match:
-                try:
-                    return float(match.group(0))
-                except ValueError:
-                    pass
-    return None
-
-
-def _recursive_number(data: Any, keys: set[str]) -> Optional[float]:
-    if isinstance(data, dict):
-        for key, value in data.items():
-            normalized = re.sub(r"[^a-z0-9]+", "_", str(key).lower()).strip("_")
-            if normalized in keys:
-                if isinstance(value, (int, float)):
-                    return float(value)
-                if isinstance(value, str):
-                    match = re.search(r"-?\d+(?:\.\d+)?", value)
-                    if match:
-                        try:
-                            return float(match.group(0))
-                        except ValueError:
-                            pass
-            found = _recursive_number(value, keys)
-            if found is not None:
-                return found
-    elif isinstance(data, list):
-        for value in data:
-            found = _recursive_number(value, keys)
-            if found is not None:
-                return found
-    return None
-
-
-def _normalize_match_report(report: dict[str, Any]) -> dict[str, Any]:
-    ats = _nested_number(
-        report,
-        ("ats_score",), ("overall_score",), ("score",), ("final_score",),
-        ("scores", "ats_score"), ("scores", "overall_score"),
-    )
-    if ats is None:
-        ats = _recursive_number(report, {"ats_score", "overall_score", "overall_match", "match_score", "final_score"})
-
-    skill = _nested_number(
-        report,
-        ("skill_score",), ("technical_score",), ("skills_score",),
-        ("scores", "skill_score"), ("scores", "technical_score"),
-    )
-    if skill is None:
-        skill = _recursive_number(report, {"skill_score", "skills_score", "technical_score", "technical_match"})
-
-    keyword = _nested_number(
-        report,
-        ("keyword_score",), ("keywords_score",),
-        ("scores", "keyword_score"),
-    )
-    if keyword is None:
-        keyword = _recursive_number(report, {"keyword_score", "keywords_score", "keyword_match"})
-
-    similarity = _nested_number(
-        report,
-        ("similarity_score",), ("semantic_similarity",), ("similarity",),
-        ("scores", "similarity_score"),
-    )
-    if similarity is None:
-        similarity = _recursive_number(report, {"similarity_score", "semantic_similarity", "similarity", "semantic_score"})
-
-    eligibility = _nested_number(
-        report,
-        ("eligibility_score",), ("eligibility", "score"),
-        ("scores", "eligibility_score"),
-    )
-
-    if eligibility is None:
-        eligibility = _recursive_number(report, {"eligibility_score", "eligibility_match"})
-
-    available = [x for x in (ats, skill, keyword, similarity, eligibility) if x is not None]
-    overall = ats if ats is not None else (sum(available) / len(available) if available else 0.0)
-
-    return {
-        "overall_score": round(float(overall), 2),
-        "ats_score": None if ats is None else round(ats, 2),
-        "skill_score": None if skill is None else round(skill, 2),
-        "keyword_score": None if keyword is None else round(keyword, 2),
-        "similarity_score": None if similarity is None else round(similarity, 2),
-        "eligibility_score": None if eligibility is None else round(eligibility, 2),
-        "matched_skills": report.get("matched_skills") or [],
-        "missing_skills": report.get("missing_skills") or report.get("missing_technical_skills") or [],
-        "matched_keywords": report.get("matched_keywords") or [],
-        "missing_keywords": report.get("missing_keywords") or [],
-        "reasons": report.get("reasons") or report.get("eligibility") or {},
     }
 
 
@@ -649,7 +637,7 @@ def api_health():
     return {
         "ok": True,
         "service": "cv-analyzer",
-        "version": "1.0.0",
+        "version": "1.2.0",
     }
 
 
@@ -687,20 +675,15 @@ async def profile_analyze(
             skills_config,
         )
 
-        profile.name = extract_candidate_name(
-            profile.layout_text,
-            resume_file.filename,
-        )
-
-        structured_profile = _profile_summary_payload(
+        structured = extract_structured_profile(
             profile,
             resume_file.filename,
         )
 
         return {
             "ok": True,
-            "analyzer_version": "1.1.0",
-            "profile": structured_profile,
+            "analyzer_version": "1.2.0",
+            "profile": structured,
         }
 
     except Exception as exc:
@@ -731,13 +714,10 @@ def match_job(
         request.job,
     )
 
-    report = analysis["report"]
-
     return {
         "ok": True,
         "job_id": request.job.id,
-        "scores": _normalize_match_report(report),
-        "report": report,
+        "report": analysis["report"],
     }
 
 
